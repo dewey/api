@@ -1,0 +1,17 @@
+{
+   "actions": [
+      {"command": "paste", "keys": "ctrl+v"}
+   ],
+   "copyOnSelect": true,
+   "experimental.detectURLs": false,
+   "multiLinePasteWarning": false,
+   "profiles": {
+      "list": [
+         {
+            "commandline": "C:/PowerShell/pwsh.exe -NoLogo",
+            "fontSize": 11,
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"
+         }
+      ]
+   }
+}
