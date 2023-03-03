@@ -16,6 +16,7 @@ type user struct {
    website string
 }
 
+// REQUIRES USER SCOPE
 // docs.github.com/rest/users/users#update-the-authenticated-user
 func (u user) update() (*http.Response, error) {
    home, err := os.UserHomeDir()
@@ -26,16 +27,16 @@ func (u user) update() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   user := creds[0].User
+   cred := creds[0].User
    var ref strings.Builder
    ref.WriteString("https://api.github.com/user")
-   body, err := json.Marshal(map[string]string{
+   body, err := json.MarshalIndent(map[string]string{
       "bio": u.bio,
       "blog": u.website,
       "company": u.company,
       "location": u.location,
       "name": u.name,
-   })
+   }, "", " ")
    if err != nil {
       return nil, err
    }
@@ -43,13 +44,9 @@ func (u user) update() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   password, ok := user.Password()
+   password, ok := cred.Password()
    if ok {
-      req.SetBasicAuth(user.Username(), password)
+      req.SetBasicAuth(cred.Username(), password)
    }
-   /*
-   -H "Accept: application/vnd.github+json" \
-   -H "X-GitHub-Api-Version: 2022-11-28" \
-   */
    return client.Do(req)
 }
