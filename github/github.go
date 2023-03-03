@@ -1,4 +1,4 @@
-package main
+package github
 
 import (
    "2a.pages.dev/rosso/http"
@@ -31,17 +31,18 @@ func credentials(name string) ([]url.URL, error) {
    return refs, nil
 }
 
-type flags struct {
-   repo string
+type repository struct {
+   name string
+   description string
    topics []string
 }
 
-func (f flags) put() (*http.Response, error) {
+func (r repository) Set_Description() (*http.Response, error) {
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
    }
-   creds, err := credentials(home + "/credentials")
+   creds, err := credentials(home + "/.git-credentials")
    if err != nil {
       return nil, err
    }
@@ -50,10 +51,46 @@ func (f flags) put() (*http.Response, error) {
    ref.WriteString("https://api.github.com/repos/")
    ref.WriteString(user.Username())
    ref.WriteByte('/')
-   ref.WriteString(f.repo)
+   ref.WriteString(r.name)
+   body, err := json.Marshal(map[string]string{
+      "description": r.description,
+   })
+   if err != nil {
+      return nil, err
+   }
+   req, err := http.NewRequest("PATCH", ref.String(), bytes.NewReader(body))
+   if err != nil {
+      return nil, err
+   }
+   password, ok := user.Password()
+   if ok {
+      req.SetBasicAuth(user.Username(), password)
+   }
+   /*
+   -H "Accept: application/vnd.github+json" \
+   -H "X-GitHub-Api-Version: 2022-11-28" \
+   */
+   return client.Do(req)
+}
+
+func (r repository) set_topics() (*http.Response, error) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      return nil, err
+   }
+   creds, err := credentials(home + "/.git-credentials")
+   if err != nil {
+      return nil, err
+   }
+   user := creds[0].User
+   var ref strings.Builder
+   ref.WriteString("https://api.github.com/repos/")
+   ref.WriteString(user.Username())
+   ref.WriteByte('/')
+   ref.WriteString(r.name)
    ref.WriteString("/topics")
    body, err := json.Marshal(map[string][]string{
-      "names": f.topics,
+      "names": r.topics,
    })
    if err != nil {
       return nil, err
