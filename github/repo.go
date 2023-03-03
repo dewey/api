@@ -10,34 +10,7 @@ import (
    "strings"
 )
 
-var client = http.Default_Client
-
-func credentials(name string) ([]url.URL, error) {
-   file, err := os.Open(name)
-   if err != nil {
-      return nil, err
-   }
-   defer file.Close()
-   var refs []url.URL
-   buf := bufio.NewScanner(file)
-   for buf.Scan() {
-      var ref url.URL
-      err := ref.UnmarshalBinary(buf.Bytes())
-      if err != nil {
-         return nil, err
-      }
-      refs = append(refs, ref)
-   }
-   return refs, nil
-}
-
-type repository struct {
-   name string
-   description string
-   topics []string
-}
-
-func (r repository) Set_Description() (*http.Response, error) {
+func (r repository) set_description() (*http.Response, error) {
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
@@ -66,11 +39,34 @@ func (r repository) Set_Description() (*http.Response, error) {
    if ok {
       req.SetBasicAuth(user.Username(), password)
    }
-   /*
-   -H "Accept: application/vnd.github+json" \
-   -H "X-GitHub-Api-Version: 2022-11-28" \
-   */
    return client.Do(req)
+}
+
+var client = http.Default_Client
+
+func credentials(name string) ([]url.URL, error) {
+   file, err := os.Open(name)
+   if err != nil {
+      return nil, err
+   }
+   defer file.Close()
+   var refs []url.URL
+   buf := bufio.NewScanner(file)
+   for buf.Scan() {
+      var ref url.URL
+      err := ref.UnmarshalBinary(buf.Bytes())
+      if err != nil {
+         return nil, err
+      }
+      refs = append(refs, ref)
+   }
+   return refs, nil
+}
+
+type repository struct {
+   name string
+   description string
+   topics []string
 }
 
 func (r repository) set_topics() (*http.Response, error) {
