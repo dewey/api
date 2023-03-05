@@ -1,34 +1,28 @@
 package main
 
 import (
-   "flag"
    "fmt"
    "strconv"
    "time"
 )
 
+func format_int(f float64) string {
+   return strconv.FormatInt(int64(f), 36)
+}
+
 func main() {
-   var year int
-   flag.IntVar(&year, "y", 0, "year")
-   flag.Parse()
-   if year >= 1 {
-      then := time.Date(year, 1, 1, 0, 0, 0, 0, time.UTC)
-      { // seconds
-         dur := time.Now().Sub(then).Seconds()
-         id := strconv.FormatInt(int64(dur), 36)
-         fmt.Println(id + "@riseup.net")
+   then := time.Now()
+   for {
+      then = then.AddDate(-1, 0, 0)
+      dur := time.Now().Sub(then)
+      id := format_int(dur.Hours())
+      if len(id) >= 4 {
+         break
       }
-      { // minutes
-         dur := time.Now().Sub(then).Minutes()
-         id := strconv.FormatInt(int64(dur), 36)
-         fmt.Println(id + "@riseup.net")
-      }
-      { // hours
-         dur := time.Now().Sub(then).Hours()
-         id := strconv.FormatInt(int64(dur), 36)
-         fmt.Println(id + "@riseup.net")
-      }
-   } else {
-      flag.Usage()
+      fmt.Println(id)
+      id = format_int(dur.Minutes())
+      fmt.Println(id)
+      id = format_int(dur.Seconds())
+      fmt.Print(id, "\n\n")
    }
 }
