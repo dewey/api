@@ -11,10 +11,10 @@ func format_int(f float64) string {
 }
 
 func main() {
-   then := time.Now()
+   now := time.Now()
+   then := time.Date(now.Year(), 1, 1, 0, 0, 0, 0, time.UTC)
    for {
-      then = then.AddDate(-1, 0, 0)
-      dur := time.Now().Sub(then)
+      dur := now.Sub(then)
       id := format_int(dur.Hours())
       if len(id) >= 4 {
          break
@@ -24,5 +24,6 @@ func main() {
       fmt.Println(id)
       id = format_int(dur.Seconds())
       fmt.Print(id, "\n\n")
+      then = then.AddDate(-1, 0, 0)
    }
 }
