@@ -6,6 +6,64 @@ import (
    "time"
 )
 
+var repos = []repository{
+   {
+      description: "Git implementation",
+      name: "git",
+   },
+   {
+      description: "Download APK from Google Play or send API requests",
+      homepage: "https://godocs.io/2a.pages.dev/googleplay",
+      name: "googleplay",
+      topics: []string{
+         "android",
+         "google-play",
+      },
+   },
+   {
+      name: "mech",
+      description: "Download media or send API requests",
+      homepage: "https://godocs.io/2a.pages.dev/mech",
+      topics: []string{
+         "amc",
+         "bandcamp",
+         "cbc-gem",
+         "nbc",
+         "paramount",
+         "roku",
+         "soundcloud",
+         "widevine",
+         "youtube",
+      },
+   },
+   {
+      name: "nursery",
+      homepage: "https://godocs.io/2a.pages.dev/nursery",
+   },
+   {
+      name: "rosso",
+      description: "Data parsers and formatters",
+      homepage: "https://godocs.io/2a.pages.dev/rosso",
+      topics: []string{
+         "dash",
+         "hls",
+         "ja3",
+         "json",
+         "mp4",
+         "protobuf",
+         "xml",
+      },
+   },
+   {
+      name: "sophia",
+      description: "Download media or send API requests",
+   },
+   {
+      name: "umber",
+      homepage: "https://2a.pages.dev/umber",
+   },
+}
+
 func Test_Description(t *testing.T) {
    for _, repo := range repos {
       res, err := repo.set_description()
@@ -32,51 +90,4 @@ func Test_Topics(t *testing.T) {
       fmt.Println(repo.name, res.Status)
       time.Sleep(time.Second)
    }
-}
-
-var repos = []repository{
-   {
-      name: "git",
-      description: "Git implementation",
-   },
-   {
-      name: "googleplay",
-      description: "Download APK from Google Play or send API requests",
-      topics: []string{
-         "android",
-         "google-play",
-      },
-   },
-   {
-      name: "mech",
-      description: "Download media or send API requests",
-      topics: []string{
-         "amc",
-         "bandcamp",
-         "cbc-gem",
-         "nbc",
-         "paramount",
-         "roku",
-         "soundcloud",
-         "widevine",
-         "youtube",
-      },
-   },
-   {
-      name: "rosso",
-      description: "Data parsers and formatters",
-      topics: []string{
-         "dash",
-         "hls",
-         "ja3",
-         "json",
-         "mp4",
-         "protobuf",
-         "xml",
-      },
-   },
-   {
-      name: "sophia",
-      description: "Download media or send API requests",
-   },
 }

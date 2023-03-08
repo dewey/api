@@ -10,38 +10,6 @@ import (
    "strings"
 )
 
-func (r repository) set_description() (*http.Response, error) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      return nil, err
-   }
-   creds, err := credentials(home + "/.git-credentials")
-   if err != nil {
-      return nil, err
-   }
-   user := creds[0].User
-   var ref strings.Builder
-   ref.WriteString("https://api.github.com/repos/")
-   ref.WriteString(user.Username())
-   ref.WriteByte('/')
-   ref.WriteString(r.name)
-   body, err := json.Marshal(map[string]string{
-      "description": r.description,
-   })
-   if err != nil {
-      return nil, err
-   }
-   req, err := http.NewRequest("PATCH", ref.String(), bytes.NewReader(body))
-   if err != nil {
-      return nil, err
-   }
-   password, ok := user.Password()
-   if ok {
-      req.SetBasicAuth(user.Username(), password)
-   }
-   return client.Do(req)
-}
-
 var client = http.Default_Client
 
 func credentials(name string) ([]url.URL, error) {
@@ -61,12 +29,6 @@ func credentials(name string) ([]url.URL, error) {
       refs = append(refs, ref)
    }
    return refs, nil
-}
-
-type repository struct {
-   name string
-   description string
-   topics []string
 }
 
 func (r repository) set_topics() (*http.Response, error) {
@@ -101,3 +63,44 @@ func (r repository) set_topics() (*http.Response, error) {
    }
    return client.Do(req)
 }
+
+type repository struct {
+   topics []string
+   name string
+   description string
+   homepage string
+}
+
+func (r repository) set_description() (*http.Response, error) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      return nil, err
+   }
+   creds, err := credentials(home + "/.git-credentials")
+   if err != nil {
+      return nil, err
+   }
+   user := creds[0].User
+   var ref strings.Builder
+   ref.WriteString("https://api.github.com/repos/")
+   ref.WriteString(user.Username())
+   ref.WriteByte('/')
+   ref.WriteString(r.name)
+   body, err := json.Marshal(map[string]string{
+      "description": r.description,
+      "homepage": r.homepage,
+   })
+   if err != nil {
+      return nil, err
+   }
+   req, err := http.NewRequest("PATCH", ref.String(), bytes.NewReader(body))
+   if err != nil {
+      return nil, err
+   }
+   password, ok := user.Password()
+   if ok {
+      req.SetBasicAuth(user.Username(), password)
+   }
+   return client.Do(req)
+}
+
