@@ -9,7 +9,7 @@ import (
 // cannot begin or end with a hyphen.
 const digits = "023456789abcdefghijkmnopqrstuvwxyz"
 
-func format_bits(u uint64) string {
+func format_bits(u uint64) []byte {
    var a [13]byte // 8qtr74ui5erii
    i := len(a)
    b := uint64(len(digits))
@@ -21,11 +21,12 @@ func format_bits(u uint64) string {
    }
    i--
    a[i] = digits[u]
-   return string(a[i:])
+   return a[i:]
 }
 
 func format(f float64) string {
-   return format_bits(uint64(f))
+   bit := format_bits(uint64(f))
+   return string(bit)
 }
 
 func main() {
