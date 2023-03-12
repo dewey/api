@@ -2,15 +2,34 @@ package main
 
 import (
    "fmt"
+   "sort"
    "time"
 )
 
+func main() {
+   now := time.Now()
+   then := time.Date(now.Year(), 1, 1, 0, 0, 0, 0, time.UTC)
+   var names []string
+   for y := 0; y < 9; y++ {
+      dur := now.Sub(then.AddDate(-y, 0, 0))
+      names = append(names, hours(dur))
+      names = append(names, minutes(dur))
+      names = append(names, seconds(dur))
+   }
+   sort.Slice(names, func(i, j int) bool {
+      return len(names[i]) < len(names[j])
+   })
+   for _, name := range names {
+      fmt.Println(name)
+   }
+}
+
 // Username may only contain alphanumeric characters or single hyphens, and
 // cannot begin or end with a hyphen.
-const digits = "023456789abcdefghijkmnopqrstuvwxyz"
+const digits = "23456789abcdefghijkmnpqrstuvwxyz"
 
-func format_bits(u uint64) []byte {
-   var a [13]byte // 8qtr74ui5erii
+func format_bits(u uint64) string {
+   var a [64]byte
    i := len(a)
    b := uint64(len(digits))
    for u >= b {
@@ -21,29 +40,20 @@ func format_bits(u uint64) []byte {
    }
    i--
    a[i] = digits[u]
-   return a[i:]
+   return string(a[i:])
 }
 
-func format(f float64) string {
-   bit := format_bits(uint64(f))
-   return string(bit)
+func hours(d time.Duration) string {
+   f := d.Hours()
+   return format_bits(uint64(f))
 }
 
-func main() {
-   now := time.Now()
-   then := time.Date(now.Year(), 1, 1, 0, 0, 0, 0, time.UTC)
-   for {
-      dur := now.Sub(then)
-      id := format(dur.Hours())
-      if len(id) >= 4 {
-         break
-      }
-      fmt.Println(id)
-      id = format(dur.Minutes())
-      fmt.Println(id)
-      id = format(dur.Seconds())
-      fmt.Print(id, "\n\n")
-      then = then.AddDate(-1, 0, 0)
-   }
+func minutes(d time.Duration) string {
+   f := d.Minutes()
+   return format_bits(uint64(f))
 }
 
+func seconds(d time.Duration) string {
+   f := d.Seconds()
+   return format_bits(uint64(f))
+}
