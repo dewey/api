@@ -3,22 +3,31 @@ package main
 import (
    "fmt"
    "os"
+   "path/filepath"
 )
 
-var names = []string{
+var patterns = []string{
    `C:\Users\Steven\.android`,
    `C:\Users\Steven\.cargo`,
-   `C:\Users\Steven\AppData\Roaming\Mozilla\Firefox\Profiles\7dnqqks1.default-release\storage\default`,
+   `C:\Users\Steven\AppData\Local\Android Open Source Project`,
+   `C:\Users\Steven\AppData\Local\Android\Sdk\system-images\android-22`,
+   `C:\Users\Steven\AppData\Local\Genymobile`,
+   `C:\Users\Steven\AppData\Local\Google`,
+   `C:\Users\Steven\AppData\Local\Mozilla\Firefox\Profiles\*.default-release\cache2`,
+   `C:\Users\Steven\AppData\Local\go-build`,
+   `C:\Users\Steven\AppData\Local\pip`,
    `C:\Users\Steven\go\pkg`,
 }
 
 func main() {
-   for _, name := range names {
-      _, err := os.Stat(name)
+   for _, pattern := range patterns {
+      matches, err := filepath.Glob(pattern)
       if err != nil {
-         fmt.Println(err)
-      } else {
-         err := os.RemoveAll(name)
+         panic(err)
+      }
+      for _, match := range matches {
+         fmt.Println(match)
+         err := os.RemoveAll(match)
          if err != nil {
             panic(err)
          }
