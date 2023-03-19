@@ -1,9 +1,9 @@
 package github
 
 import (
-   "2a.pages.dev/rosso/http"
    "bytes"
    "encoding/json"
+   "net/http"
    "os"
    "strings"
 )
