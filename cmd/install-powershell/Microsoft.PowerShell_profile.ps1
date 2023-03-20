@@ -1,3 +1,6 @@
+## 2023-03-19
+Set-PSReadLineOption -AddToHistoryHandler $null
+
 ## 2023-03-06
 Get-Alias | Remove-Alias -Force
 
@@ -14,7 +17,6 @@ $env:PATH += ';D:\git\mingw64\bin'
 $env:PATH += ';D:\go\bin'
 $env:PATH += ';D:\rust\bin'
 $env:PATH += ';D:\vim'
-
 
 ## 2022-04-18
 $env:LESS = -join @(
