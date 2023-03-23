@@ -1,4 +1,1 @@
-*.exe
-Cargo.lock
-ignore.go
-target
+*.pdf
