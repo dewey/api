@@ -11,7 +11,3 @@ Might need to delete this:
 ~~~
 HKEY_CLASSES_ROOT\Applications\gvim.exe
 ~~~
-
-## Typst
-
-https://typst.app/docs/reference/syntax
