@@ -6,10 +6,34 @@ import (
    "net/http"
    "os"
    "path/filepath"
-   "strings"
 )
 
-const version = "/v2.35.1.windows.1/MinGit-2.35.1-busybox-64-bit.zip"
+func do_git(home string) error {
+   home = filepath.Join(home, "nursery/git")
+   local := filepath.Join(home, filepath.Base(release))
+   fmt.Println("Stat", local)
+   if _, err := os.Stat(local); err != nil {
+      err := download(release, local)
+      if err != nil {
+         return err
+      }
+   }
+   if err := nursery.Zip(local, filepath.Dir(local), 0); err != nil {
+      return err
+   }
+   for _, file := range files {
+      in := filepath.Join(home, file)
+      out := filepath.Join(`C:\git`, file)
+      if err := os.Rename(in, out); err != nil {
+         return err
+      }
+   }
+   return nil
+}
+
+const release = "https://github.com" +
+   "/git-for-windows/git/releases/download/v2.35.1.windows.1/" +
+   "MinGit-2.35.1-busybox-64-bit.zip"
 
 var files = []string{
    "mingw64/bin/git-remote-https.exe",
@@ -49,33 +73,4 @@ func download(in, out string) error {
       return err
    }
    return nil
-}
-
-func main() {
-   var remote strings.Builder
-   remote.WriteString("https://github.com/git-for-windows/git/releases/download")
-   remote.WriteString(version)
-   home, err := os.UserHomeDir()
-   if err != nil {
-      panic(err)
-   }
-   home = filepath.Join(home, "nursery/git")
-   local := filepath.Join(home, filepath.Base(remote.String()))
-   fmt.Println("Stat", local)
-   if _, err := os.Stat(local); err != nil {
-      err := download(remote.String(), local)
-      if err != nil {
-         panic(err)
-      }
-   }
-   if err := nursery.Zip(local, filepath.Dir(local), 0); err != nil {
-      panic(err)
-   }
-   for _, file := range files {
-      in := filepath.Join(home, file)
-      out := filepath.Join(`C:\git`, file)
-      if err := os.Rename(in, out); err != nil {
-         panic(err)
-      }
-   }
 }
