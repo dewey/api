@@ -7,7 +7,23 @@ import (
    "strings"
 )
 
-var Client = http.Default_Client
+// cant use encoding.TextMarshaler because we are JSON marshalling this
+func (v Variables) Text() (string, error) {
+   var b strings.Builder
+   country, err := get_country(v.Country_Code)
+   if err != nil {
+      return "", err
+   }
+   b.WriteString(country)
+   b.WriteByte(' ')
+   b.WriteString(v.Full_Path)
+   return b.String(), nil
+}
+
+type details_request struct {
+   Query string
+   Variables Variables
+}
 
 const query = `
 query GetUrlTitleDetails(
@@ -40,28 +56,8 @@ func graphQL_compact(s string) string {
    return strings.NewReplacer(old_new...).Replace(s)
 }
 
-type Content_URLs struct {
+type URLs struct {
    Href_Lang_Tags []Lang_Tag
-}
-
-func New_Content_URLs(path string) (*Content_URLs, error) {
-   req, err := http.NewRequest(
-      "GET", "https://apis.justwatch.com/content/urls", nil,
-   )
-   if err != nil {
-      return nil, err
-   }
-   req.URL.RawQuery = "path=" + path
-   res, err := Client.Do(req)
-   if err != nil {
-      return nil, err
-   }
-   defer res.Body.Close()
-   con := new(Content_URLs)
-   if err := json.NewDecoder(res.Body).Decode(con); err != nil {
-      return nil, err
-   }
-   return con, nil
 }
 
 // I am including `presentationType` to differentiate the different options,
@@ -110,7 +106,27 @@ type Variables struct {
    Full_Path string `json:"fullPath"`
 }
 
-func (v Variables) Details() (*Details, error) {
+func New_URLs(c http.Client, path string) (*URLs, error) {
+   req, err := http.NewRequest(
+      "GET", "https://apis.justwatch.com/content/urls", nil,
+   )
+   if err != nil {
+      return nil, err
+   }
+   req.URL.RawQuery = "path=" + path
+   res, err := c.Do(req)
+   if err != nil {
+      return nil, err
+   }
+   defer res.Body.Close()
+   content := new(URLs)
+   if err := json.NewDecoder(res.Body).Decode(content); err != nil {
+      return nil, err
+   }
+   return content, nil
+}
+
+func (v Variables) Details(c http.Client) (*Details, error) {
    var r details_request
    r.Query = graphQL_compact(query)
    r.Variables = v
@@ -125,7 +141,7 @@ func (v Variables) Details() (*Details, error) {
       return nil, err
    }
    req.Header.Set("Content-Type", "application/json")
-   res, err := Client.Do(req)
+   res, err := c.Do(req)
    if err != nil {
       return nil, err
    }
@@ -135,22 +151,4 @@ func (v Variables) Details() (*Details, error) {
       return nil, err
    }
    return detail, nil
-}
-
-// cant use encoding.TextMarshaler because we are JSON marshalling this
-func (v Variables) Text() (string, error) {
-   var b strings.Builder
-   country, err := get_country(v.Country_Code)
-   if err != nil {
-      return "", err
-   }
-   b.WriteString(country)
-   b.WriteByte(' ')
-   b.WriteString(v.Full_Path)
-   return b.String(), nil
-}
-
-type details_request struct {
-   Query string
-   Variables Variables
 }

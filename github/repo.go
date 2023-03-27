@@ -10,8 +10,6 @@ import (
    "strings"
 )
 
-var client = http.Default_Client
-
 func credentials(name string) ([]url.URL, error) {
    file, err := os.Open(name)
    if err != nil {
@@ -31,7 +29,7 @@ func credentials(name string) ([]url.URL, error) {
    return refs, nil
 }
 
-func (r repository) set_topics() (*http.Response, error) {
+func (r repository) set_topics(c http.Client) (*http.Response, error) {
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
@@ -61,7 +59,7 @@ func (r repository) set_topics() (*http.Response, error) {
    if ok {
       req.SetBasicAuth(user.Username(), password)
    }
-   return client.Do(req)
+   return c.Do(req)
 }
 
 type repository struct {
@@ -71,7 +69,7 @@ type repository struct {
    homepage string
 }
 
-func (r repository) set_description() (*http.Response, error) {
+func (r repository) set_description(c http.Client) (*http.Response, error) {
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
@@ -101,6 +99,6 @@ func (r repository) set_description() (*http.Response, error) {
    if ok {
       req.SetBasicAuth(user.Username(), password)
    }
-   return client.Do(req)
+   return c.Do(req)
 }
 

@@ -18,7 +18,7 @@ type user struct {
 
 // REQUIRES USER SCOPE
 // docs.github.com/rest/users/users#update-the-authenticated-user
-func (u user) update() (*http.Response, error) {
+func (u user) update(c http.Client) (*http.Response, error) {
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
@@ -48,5 +48,5 @@ func (u user) update() (*http.Response, error) {
    if ok {
       req.SetBasicAuth(cred.Username(), password)
    }
-   return client.Do(req)
+   return c.Do(req)
 }

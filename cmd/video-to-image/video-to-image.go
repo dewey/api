@@ -8,23 +8,9 @@ import (
    "strconv"
 )
 
-var f struct {
-   all bool
-   duration string
-   name string
-   start string
-   ext int64
-}
-
-type extensions map[int64]string
-
-var exts = extensions{
-   0: ".jpg",
-   1: ".png",
-}
-
 func (e extensions) String() string {
-   b := []byte("extension")
+   var b []byte
+   b = append(b, "extension"...)
    for k, v := range e {
       b = append(b, '\n')
       b = strconv.AppendInt(b, k, 10)
@@ -66,3 +52,18 @@ func main() {
       flag.Usage()
    }
 }
+var f struct {
+   all bool
+   duration string
+   name string
+   start string
+   ext int64
+}
+
+type extensions map[int64]string
+
+var exts = extensions{
+   0: ".jpg",
+   1: ".png",
+}
+

@@ -1,23 +1,25 @@
 package main
 
 import (
-   "2a.pages.dev/nursery/justwatch"
+   "2a.pages.dev/rosso/http"
    "flag"
    "time"
 )
+
+type flags struct {
+   address string
+   http.Client
+   language string
+   sleep time.Duration
+}
 
 func main() {
    var f flags
    flag.StringVar(&f.address, "a", "", "address")
    flag.StringVar(&f.language, "lang", "en", "language")
+   flag.IntVar(&f.Log_Level, "log", 0, "log level")
    flag.DurationVar(&f.sleep, "s", 99*time.Millisecond, "sleep")
-   flag.BoolVar(&f.verbose, "v", false, "verbose")
    flag.Parse()
-   if f.verbose {
-      justwatch.Client.Log_Level = 2
-   } else {
-      justwatch.Client.Log_Level = 0
-   }
    if f.address != "" {
       err := f.stream()
       if err != nil {

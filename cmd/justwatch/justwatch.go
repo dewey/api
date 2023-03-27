@@ -7,19 +7,12 @@ import (
    "time"
 )
 
-type flags struct {
-   address string
-   language string
-   sleep time.Duration
-   verbose bool
-}
-
 func (f flags) stream() error {
    address, err := url.Parse(f.address)
    if err != nil {
       return err
    }
-   content, err := justwatch.New_Content_URLs(address.Path)
+   content, err := justwatch.New_URLs(f.Client, address.Path)
    if err != nil {
       return err
    }
@@ -32,7 +25,7 @@ func (f flags) stream() error {
             return err
          }
          fmt.Println(text)
-         detail, err := v.Details()
+         detail, err := v.Details(f.Client)
          if err != nil {
             return err
          }
