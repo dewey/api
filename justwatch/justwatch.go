@@ -2,7 +2,6 @@ package justwatch
 
 import (
    "2a.pages.dev/rosso/http"
-   "bytes"
    "encoding/json"
    "strings"
 )
@@ -106,15 +105,13 @@ type Variables struct {
    Full_Path string `json:"fullPath"`
 }
 
-func New_URLs(c http.Client, path string) (*URLs, error) {
-   req, err := http.NewRequest(
-      "GET", "https://apis.justwatch.com/content/urls", nil,
-   )
-   if err != nil {
-      return nil, err
-   }
+func New_URLs(path string) (*URLs, error) {
+   req := http.Get()
+   req.URL.Host = "apis.justwatch.com"
+   req.URL.Path = "/content/urls"
    req.URL.RawQuery = "path=" + path
-   res, err := c.Do(req)
+   req.URL.Scheme = "https"
+   res, err := http.Default_Client.Do(req)
    if err != nil {
       return nil, err
    }
@@ -126,22 +123,21 @@ func New_URLs(c http.Client, path string) (*URLs, error) {
    return content, nil
 }
 
-func (v Variables) Details(c http.Client) (*Details, error) {
+func (v Variables) Details() (*Details, error) {
    var r details_request
    r.Query = graphQL_compact(query)
    r.Variables = v
-   req_body, err := json.Marshal(r)
+   body, err := json.Marshal(r)
    if err != nil {
       return nil, err
    }
-   req, err := http.NewRequest(
-      "POST", "https://apis.justwatch.com/graphql", bytes.NewReader(req_body),
-   )
-   if err != nil {
-      return nil, err
-   }
+   req := http.Post()
+   req.Body_Bytes(body)
    req.Header.Set("Content-Type", "application/json")
-   res, err := c.Do(req)
+   req.URL.Host = "apis.justwatch.com"
+   req.URL.Path = "/graphql"
+   req.URL.Scheme = "https"
+   res, err := http.Default_Client.Do(req)
    if err != nil {
       return nil, err
    }

@@ -13,7 +13,6 @@ func Test_User(t *testing.T) {
       name: "Steven Penny",
       website: "https://discord.com/invite/WWq6rFb8Rf",
    }
-   client.Log_Level = 2
    res, err := u.update()
    if err != nil {
       t.Fatal(err)

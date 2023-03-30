@@ -6,6 +6,33 @@ import (
    "time"
 )
 
+func Test_Description(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_description()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}
+
+func Test_Topics(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_topics()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}
 var repos = []repository{
    {
       description: "Git implementation",
@@ -64,30 +91,3 @@ var repos = []repository{
    },
 }
 
-func Test_Description(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_description()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}
-
-func Test_Topics(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_topics()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}

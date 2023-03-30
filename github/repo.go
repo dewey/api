@@ -3,12 +3,40 @@ package github
 import (
    "2a.pages.dev/rosso/http"
    "bufio"
-   "bytes"
    "encoding/json"
    "net/url"
    "os"
-   "strings"
 )
+
+func (r repository) set_description() (*http.Response, error) {
+   // Body
+   body, err := json.Marshal(map[string]string{
+      "description": r.description,
+      "homepage": r.homepage,
+   })
+   if err != nil {
+      return nil, err
+   }
+   // URL
+   home, err := os.UserHomeDir()
+   if err != nil {
+      return nil, err
+   }
+   creds, err := credentials(home + "/.git-credentials")
+   if err != nil {
+      return nil, err
+   }
+   user := creds[0].User
+   req := http.Patch()
+   req.Body_Bytes(body)
+   if password, ok := user.Password(); ok {
+      req.SetBasicAuth(user.Username(), password)
+   }
+   req.URL.Host = "api.github.com"
+   req.URL.Path = "/repos/" + user.Username() + "/" + r.name
+   req.URL.Scheme = "https"
+   return http.Default_Client.Do(req)
+}
 
 func credentials(name string) ([]url.URL, error) {
    file, err := os.Open(name)
@@ -29,7 +57,15 @@ func credentials(name string) ([]url.URL, error) {
    return refs, nil
 }
 
-func (r repository) set_topics(c http.Client) (*http.Response, error) {
+func (r repository) set_topics() (*http.Response, error) {
+   // Body
+   body, err := json.Marshal(map[string][]string{
+      "names": r.topics,
+   })
+   if err != nil {
+      return nil, err
+   }
+   // URL
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
@@ -39,27 +75,15 @@ func (r repository) set_topics(c http.Client) (*http.Response, error) {
       return nil, err
    }
    user := creds[0].User
-   var ref strings.Builder
-   ref.WriteString("https://api.github.com/repos/")
-   ref.WriteString(user.Username())
-   ref.WriteByte('/')
-   ref.WriteString(r.name)
-   ref.WriteString("/topics")
-   body, err := json.Marshal(map[string][]string{
-      "names": r.topics,
-   })
-   if err != nil {
-      return nil, err
-   }
-   req, err := http.NewRequest("PUT", ref.String(), bytes.NewReader(body))
-   if err != nil {
-      return nil, err
-   }
-   password, ok := user.Password()
-   if ok {
+   req := http.Put()
+   req.Body_Bytes(body)
+   if password, ok := user.Password(); ok {
       req.SetBasicAuth(user.Username(), password)
    }
-   return c.Do(req)
+   req.URL.Host = "api.github.com"
+   req.URL.Path = "/repos/" + user.Username() + "/" + r.name + "/topics"
+   req.URL.Scheme = "https"
+   return http.Default_Client.Do(req)
 }
 
 type repository struct {
@@ -67,38 +91,5 @@ type repository struct {
    name string
    description string
    homepage string
-}
-
-func (r repository) set_description(c http.Client) (*http.Response, error) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      return nil, err
-   }
-   creds, err := credentials(home + "/.git-credentials")
-   if err != nil {
-      return nil, err
-   }
-   user := creds[0].User
-   var ref strings.Builder
-   ref.WriteString("https://api.github.com/repos/")
-   ref.WriteString(user.Username())
-   ref.WriteByte('/')
-   ref.WriteString(r.name)
-   body, err := json.Marshal(map[string]string{
-      "description": r.description,
-      "homepage": r.homepage,
-   })
-   if err != nil {
-      return nil, err
-   }
-   req, err := http.NewRequest("PATCH", ref.String(), bytes.NewReader(body))
-   if err != nil {
-      return nil, err
-   }
-   password, ok := user.Password()
-   if ok {
-      req.SetBasicAuth(user.Username(), password)
-   }
-   return c.Do(req)
 }
 

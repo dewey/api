@@ -1,11 +1,9 @@
 package github
 
 import (
-   "bytes"
+   "2a.pages.dev/rosso/http"
    "encoding/json"
-   "net/http"
    "os"
-   "strings"
 )
 
 type user struct {
@@ -18,18 +16,8 @@ type user struct {
 
 // REQUIRES USER SCOPE
 // docs.github.com/rest/users/users#update-the-authenticated-user
-func (u user) update(c http.Client) (*http.Response, error) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      return nil, err
-   }
-   creds, err := credentials(home + "/.git-credentials")
-   if err != nil {
-      return nil, err
-   }
-   cred := creds[0].User
-   var ref strings.Builder
-   ref.WriteString("https://api.github.com/user")
+func (u user) update() (*http.Response, error) {
+   // Body
    body, err := json.MarshalIndent(map[string]string{
       "bio": u.bio,
       "blog": u.website,
@@ -40,13 +28,23 @@ func (u user) update(c http.Client) (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   req, err := http.NewRequest("PATCH", ref.String(), bytes.NewReader(body))
+   // URL
+   home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
    }
-   password, ok := cred.Password()
-   if ok {
+   creds, err := credentials(home + "/.git-credentials")
+   if err != nil {
+      return nil, err
+   }
+   cred := creds[0].User
+   req := http.Patch()
+   req.Body_Bytes(body)
+   if password, ok := cred.Password(); ok {
       req.SetBasicAuth(cred.Username(), password)
    }
-   return c.Do(req)
+   req.URL.Host = "api.github.com"
+   req.URL.Path = "/user"
+   req.URL.Scheme = "https"
+   return http.Default_Client.Do(req)
 }

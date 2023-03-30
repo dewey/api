@@ -9,12 +9,11 @@ import (
 const enemy = "/us/movie/ennemi"
 
 func Test_Content(t *testing.T) {
-   content, err := New_Content_URLs(enemy)
+   content, err := New_URLs(enemy)
    if err != nil {
      t.Fatal(err)
    }
    offer := make(Offers)
-   Client.Log_Level = 2
    for _, tag := range content.Href_Lang_Tags {
       if tag.Language() == "en" {
          v := tag.Variables()

@@ -12,7 +12,7 @@ func (f flags) stream() error {
    if err != nil {
       return err
    }
-   content, err := justwatch.New_URLs(f.Client, address.Path)
+   content, err := justwatch.New_URLs(address.Path)
    if err != nil {
       return err
    }
@@ -25,7 +25,7 @@ func (f flags) stream() error {
             return err
          }
          fmt.Println(text)
-         detail, err := v.Details(f.Client)
+         detail, err := v.Details()
          if err != nil {
             return err
          }
