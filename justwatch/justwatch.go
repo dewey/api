@@ -6,6 +6,12 @@ import (
    "strings"
 )
 
+// this is better than strings.Replace and strings.ReplaceAll
+func graphQL_compact(s string) string {
+   f := strings.Fields(s)
+   return strings.Join(f, " ")
+}
+
 // cant use encoding.TextMarshaler because we are JSON marshalling this
 func (v Variables) Text() (string, error) {
    var b strings.Builder
@@ -43,17 +49,6 @@ query GetUrlTitleDetails(
    }
 }
 `
-
-func graphQL_compact(s string) string {
-   old_new := []string{
-      "\n", "",
-      strings.Repeat(" ", 12), " ",
-      strings.Repeat(" ", 9), " ",
-      strings.Repeat(" ", 6), " ",
-      strings.Repeat(" ", 3), " ",
-   }
-   return strings.NewReplacer(old_new...).Replace(s)
-}
 
 type URLs struct {
    Href_Lang_Tags []Lang_Tag
