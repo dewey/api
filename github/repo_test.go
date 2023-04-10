@@ -6,37 +6,10 @@ import (
    "time"
 )
 
-func Test_Description(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_description()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}
-
-func Test_Topics(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_topics()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}
 var repos = []repository{
    {
-      description: "Git implementation",
-      name: "git",
+      name: "umber",
+      homepage: "https://2a.pages.dev/p/umber",
    },
    {
       description: "Download APK from Google Play or send API requests",
@@ -85,9 +58,32 @@ var repos = []repository{
       name: "sophia",
       description: "Download media or send API requests",
    },
-   {
-      name: "umber",
-      homepage: "https://2a.pages.dev/umber",
-   },
 }
 
+func Test_Description(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_description()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}
+
+func Test_Topics(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_topics()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}

@@ -2,6 +2,7 @@ package justwatch
 
 import (
    "fmt"
+   "html"
    "sort"
    "strings"
 )
@@ -15,7 +16,7 @@ func (o Offers) Text() (string, error) {
       }
       b.WriteString(mon_type)
       for _, web_URL := range sort_keys(url_codes) {
-         b.WriteByte('\n')
+         b.WriteString("\n\n")
          b.WriteString(tab)
          b.WriteString(web_URL)
          for _, code := range sort_keys(url_codes[web_URL]) {
@@ -31,6 +32,23 @@ func (o Offers) Text() (string, error) {
       }
    }
    return b.String(), nil
+}
+
+func (o Offers) Add(country_code string, detail *Details) {
+   for _, node := range detail.Data.URL.Node.Offers {
+      offer := o[node.Monetization_Type]
+      if offer == nil {
+         offer = make(map[string]Country_Codes)
+      }
+      ref := html.UnescapeString(node.Standard_Web_URL)
+      codes := offer[ref]
+      if codes == nil {
+         codes = make(Country_Codes)
+      }
+      codes[country_code] = struct{}{}
+      offer[ref] = codes
+      o[node.Monetization_Type] = offer
+   }
 }
 
 type Country_Codes map[string]struct{}
@@ -88,22 +106,6 @@ func get_country(code string) (string, error) {
       return "", fmt.Errorf("invalid country code %q", code)
    }
    return country, nil
-}
-
-func (o Offers) Add(country_code string, detail *Details) {
-   for _, node := range detail.Data.URL.Node.Offers {
-      offer := o[node.Monetization_Type]
-      if offer == nil {
-         offer = make(map[string]Country_Codes)
-      }
-      codes := offer[node.Standard_Web_URL]
-      if codes == nil {
-         codes = make(Country_Codes)
-      }
-      codes[country_code] = struct{}{}
-      offer[node.Standard_Web_URL] = codes
-      o[node.Monetization_Type] = offer
-   }
 }
 
 func (o Offers) Stream() Offers {
