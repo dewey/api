@@ -9,7 +9,7 @@ import (
 var repos = []repository{
    {
       name: "umber",
-      homepage: "https://2a.pages.dev/p/umber",
+      homepage: "https://2e.pages.dev/umber",
    },
    {
       description: "Download APK from Google Play or send API requests",
