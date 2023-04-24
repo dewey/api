@@ -1,6 +1,9 @@
 # powershell-powershell
 
-<https://github.com/PowerShell/PowerShell>
+Improve startup time by triggering initialization of additional types on
+background thread:
+
+https://github.com/PowerShell/PowerShell/pull/18195
 
 ## scrollToTop
 
