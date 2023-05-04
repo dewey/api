@@ -8,44 +8,26 @@ import (
    "go/token"
 )
 
-func main() {
+func (f flags) read() error {
    fset := token.NewFileSet()
-   pkgs, err := parser.ParseDir(fset, "D:/git/tls", nil, 0)
+   pkgs, err := parser.ParseDir(fset, f.r_path, nil, 0)
    if err != nil {
-      panic(err)
+      return err
    }
    pkg := doc.New(pkgs["tls"], "tls", 0)
-   for _, typ := range pkg.Types {
-      for _, method := range typ.Methods {
-         fmt.Println(typ.Name, method.Name)
-         {
-            items := method.Decl.Type.Params
-            if items != nil {
-               for _, item := range items.List {
-                  ident := ast_ident(item.Type)
-                  fmt.Println(is_exported(ident), ident)
-               }
-            }
-         }
-         {
-            items := method.Decl.Type.Results
-            if items != nil {
-               for _, item := range items.List {
-                  ident := ast_ident(item.Type)
-                  fmt.Println(is_exported(ident), ident)
-               }
-            }
-         }
-         fmt.Println()
+   for _, fun := range pkg.Funcs {
+      if !is_exported(fun.Decl.Type) {
+         fmt.Println(fun.Name)
       }
    }
-}
-
-func is_exported(ident *ast.Ident) bool {
-   if doc.IsPredeclared(ident.String()) {
-      return true
+   for _, typ := range pkg.Types {
+      for _, method := range typ.Methods {
+         if !is_exported(method.Decl.Type) {
+            fmt.Println(typ.Name, method.Name)
+         }
+      }
    }
-   return ident.IsExported()
+   return nil
 }
 
 func ast_ident(expr ast.Expr) *ast.Ident {
@@ -59,5 +41,27 @@ func ast_ident(expr ast.Expr) *ast.Ident {
    case *ast.StarExpr:
       return ast_ident(v.X)
    }
-   panic(expr)
+   return nil
+}
+
+func is_exported(ft *ast.FuncType) bool {
+   iterate := func(items *ast.FieldList) bool {
+      if items != nil {
+         for _, item := range items.List {
+            ident := ast_ident(item.Type)
+            if !ident.IsExported() {
+               if !doc.IsPredeclared(ident.String()) {
+                  return false
+               }
+            }
+         }
+      }
+      return true
+   }
+   if iterate(ft.Params) {
+      if iterate(ft.Results) {
+         return true
+      }
+   }
+   return false
 }
