@@ -8,10 +8,6 @@ import (
 
 var repos = []repository{
    {
-      name: "umber",
-      homepage: "https://2e.pages.dev/umber",
-   },
-   {
       description: "Download APK from Google Play or send API requests",
       homepage: "https://godocs.io/2a.pages.dev/googleplay",
       name: "googleplay",
@@ -57,6 +53,16 @@ var repos = []repository{
    {
       name: "sophia",
       description: "Download media or send API requests",
+   },
+   {
+      description: "Go TLS 1.2 client",
+      homepage: "https://godocs.io/2a.pages.dev/tls",
+      name: "tls",
+      topics: []string{"ja3"},
+   },
+   {
+      name: "umber",
+      homepage: "https://2e.pages.dev/umber",
    },
 }
 
