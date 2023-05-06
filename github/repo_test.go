@@ -55,7 +55,7 @@ var repos = []repository{
       description: "Download media or send API requests",
    },
    {
-      description: "Go TLS 1.2 client",
+      description: "TLS library, providing low-level access to the ClientHello for mimicry purposes",
       homepage: "https://godocs.io/2a.pages.dev/tls",
       name: "tls",
       topics: []string{"ja3"},
