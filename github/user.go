@@ -1,8 +1,9 @@
 package github
 
 import (
-   "2a.pages.dev/rosso/http"
+   "bytes"
    "encoding/json"
+   "net/http"
    "os"
 )
 
@@ -28,23 +29,19 @@ func (u user) update() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   // URL
    home, err := os.UserHomeDir()
    if err != nil {
       return nil, err
    }
-   creds, err := credentials(home + "/.git-credentials")
+   cred, err := credential(home + "/Documents/github.json")
    if err != nil {
       return nil, err
    }
-   cred := creds[0].User
-   req := http.Patch()
-   req.Body_Bytes(body)
-   if password, ok := cred.Password(); ok {
-      req.SetBasicAuth(cred.Username(), password)
-   }
-   req.URL.Host = "api.github.com"
-   req.URL.Path = "/user"
-   req.URL.Scheme = "https"
-   return http.Default_Client.Do(req)
+   req, err := http.NewRequest(
+      "PATCH",
+      "https://api.github.com/user",
+      bytes.NewReader(body),
+   )
+   req.SetBasicAuth(cred["username"], cred["password"])
+   return new(http.Transport).RoundTrip(req)
 }
