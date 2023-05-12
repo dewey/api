@@ -8,13 +8,12 @@ import (
 )
 
 func credential(name string) (map[string]string, error) {
-   file, err := os.Open(name)
+   data, err := os.ReadFile(name)
    if err != nil {
       return nil, err
    }
-   defer file.Close()
    var cred map[string]string
-   if err := json.NewDecoder(file).Decode(&cred); err != nil {
+   if err := json.Unmarshal(data, &cred); err != nil {
       return nil, err
    }
    return cred, nil
