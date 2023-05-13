@@ -4,6 +4,7 @@ import (
    "flag"
    "fmt"
    "github.com/xi2/xz"
+   "io"
    "net/http"
    "os"
    "os/exec"
@@ -44,15 +45,11 @@ func download_server(server, out string) error {
    if err != nil {
       return err
    }
-   file, err := os.Create(out)
+   data, err := io.ReadAll(read)
    if err != nil {
       return err
    }
-   defer file.Close()
-   if _, err := file.ReadFrom(read); err != nil {
-      return err
-   }
-   return nil
+   return os.WriteFile(out, data, os.ModePerm)
 }
 
 type flags struct {

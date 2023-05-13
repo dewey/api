@@ -1,22 +1,17 @@
 package main
 
 import (
-   "encoding/json"
    "fmt"
    "os"
    "strings"
 )
 
-func credential(name string) (map[string]string, error) {
+func sign_in(name string) ([]string, error) {
    data, err := os.ReadFile(name)
    if err != nil {
       return nil, err
    }
-   var cred map[string]string
-   if err := json.Unmarshal(data, &cred); err != nil {
-      return nil, err
-   }
-   return cred, nil
+   return strings.Split(string(data), "\n"), nil
 }
 
 func main() {
@@ -24,7 +19,7 @@ func main() {
    if err != nil {
       panic(err)
    }
-   cred, err := credential(home + "/Documents/github.json")
+   account, err := sign_in(home + "/Documents/github.txt")
    if err != nil {
       panic(err)
    }
@@ -33,10 +28,10 @@ func main() {
       switch {
       case strings.HasPrefix(prompt, "Username"):
          fmt.Fprintln(os.Stderr, "Username")
-         fmt.Println(cred["username"])
+         fmt.Println(account[0])
       case strings.HasPrefix(prompt, "Password"):
          fmt.Fprintln(os.Stderr, "Password")
-         fmt.Println(cred["password"])
+         fmt.Println(account[1])
       }
    }
 }

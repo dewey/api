@@ -64,21 +64,15 @@ func create(head *tar.Header, in io.Reader, out string) error {
    }
    switch head.Typeflag {
    case tar.TypeReg:
-      file, err := os.Create(head.Name)
+      data, err := io.ReadAll(in)
       if err != nil {
          return err
       }
-      defer file.Close()
-      if _, err := file.ReadFrom(in); err != nil {
-         return err
-      }
+      return os.WriteFile(head.Name, data, os.ModePerm)
    case tar.TypeLink:
       _, err := os.Stat(head.Name)
       if err != nil {
-         err := os.Link(filepath.Join(out, head.Linkname), head.Name)
-         if err != nil {
-            return err
-         }
+         return os.Link(filepath.Join(out, head.Linkname), head.Name)
       }
    }
    return nil
@@ -98,17 +92,18 @@ func Zip(in, dir string, level int) error {
       if err != nil {
          return err
       }
-      defer in.Close()
+      data, err := io.ReadAll(in)
+      if err != nil {
+         return err
+      }
+      if err := in.Close(); err != nil {
+         return err
+      }
       head.Name = filepath.Join(dir, strip(head.Name, level))
       if err := os.MkdirAll(filepath.Dir(head.Name), os.ModePerm); err != nil {
          return err
       }
-      out, err := os.Create(head.Name)
-      if err != nil {
-         return err
-      }
-      defer out.Close()
-      if _, err := out.ReadFrom(in); err != nil {
+      if err := os.WriteFile(head.Name, data, os.ModePerm); err != nil {
          return err
       }
    }

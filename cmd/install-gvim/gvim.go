@@ -3,6 +3,7 @@ package main
 import (
    "2a.pages.dev/nursery"
    "fmt"
+   "io"
    "net/http"
    "os"
    "path/filepath"
@@ -18,15 +19,11 @@ func download(in, out string) error {
    if err := os.MkdirAll(filepath.Dir(out), os.ModePerm); err != nil {
       return err
    }
-   file, err := os.Create(out)
+   data, err := io.ReadAll(res.Body)
    if err != nil {
       return err
    }
-   defer file.Close()
-   if _, err := file.ReadFrom(res.Body); err != nil {
-      return err
-   }
-   return nil
+   return os.WriteFile(out, data, os.ModePerm)
 }
 
 const vim_installer =

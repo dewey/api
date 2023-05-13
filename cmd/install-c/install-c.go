@@ -17,11 +17,11 @@ func extract(in, out string) error {
    }
    defer file.Close()
    fmt.Println("Zstd", in)
-   zst, err := zstd.NewReader(file)
+   read, err := zstd.NewReader(file)
    if err != nil {
       return err
    }
-   return nursery.Tar(zst, out, 1)
+   return nursery.Tar(read, out, 1)
 }
 
 func download(in, out string) error {
@@ -35,15 +35,11 @@ func download(in, out string) error {
       return err
    }
    defer res.Body.Close()
-   file, err := os.Create(out)
+   data, err := io.ReadAll(res.Body)
    if err != nil {
       return err
    }
-   defer file.Close()
-   if _, err := io.Copy(file, res.Body); err != nil {
-      return err
-   }
-   return nil
+   return os.WriteFile(out, data, os.ModePerm)
 }
 
 func main() {
