@@ -7,5 +7,5 @@ func do_config(home string) error {
    if err != nil {
       return err
    }
-   return os.WriteFile(home + "/.gitconfig", data, os.ModePerm)
+   return os.WriteFile(home + "/.gitconfig", data, 0666)
 }

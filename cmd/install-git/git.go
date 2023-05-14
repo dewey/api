@@ -69,5 +69,5 @@ func download(in, out string) error {
    if err != nil {
       return err
    }
-   return os.WriteFile(out, data, os.ModePerm)
+   return os.WriteFile(out, data, 0666)
 }

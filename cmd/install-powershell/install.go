@@ -16,7 +16,7 @@ func main() {
       if err != nil {
          panic(err)
       }
-      if err := os.WriteFile(name, data, os.ModePerm); err != nil {
+      if err := os.WriteFile(name, data, 0777); err != nil {
          panic(err)
       }
    }

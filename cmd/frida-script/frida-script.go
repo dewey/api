@@ -29,14 +29,14 @@ func stem(s string) string {
    return base[:len(base)-len(ext)]
 }
 
-func download_server(server, out string) error {
+func download_server(in, out string) error {
    fmt.Println("Stat", out)
    _, err := os.Stat(out)
    if err == nil {
       return nil
    }
-   fmt.Println("GET", server)
-   res, err := http.Get(server)
+   fmt.Println("GET", in)
+   res, err := http.Get(in)
    if err != nil {
       return err
    }
@@ -49,7 +49,7 @@ func download_server(server, out string) error {
    if err != nil {
       return err
    }
-   return os.WriteFile(out, data, os.ModePerm)
+   return os.WriteFile(out, data, 0777)
 }
 
 type flags struct {

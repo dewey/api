@@ -9,6 +9,28 @@ import (
    "path/filepath"
 )
 
+func create(head *tar.Header, in io.Reader, out string) error {
+   head.Name = filepath.Join(out, head.Name)
+   err := os.MkdirAll(filepath.Dir(head.Name), 0666)
+   if err != nil {
+      return err
+   }
+   switch head.Typeflag {
+   case tar.TypeReg:
+      data, err := io.ReadAll(in)
+      if err != nil {
+         return err
+      }
+      return os.WriteFile(head.Name, data, 0777)
+   case tar.TypeLink:
+      _, err := os.Stat(head.Name)
+      if err != nil {
+         return os.Link(filepath.Join(out, head.Linkname), head.Name)
+      }
+   }
+   return nil
+}
+
 func Xz(in, dir string, level int) error {
    file, err := os.Open(in)
    if err != nil {
@@ -56,28 +78,6 @@ func Tar(in io.Reader, dir string, level int) error {
    return nil
 }
 
-func create(head *tar.Header, in io.Reader, out string) error {
-   head.Name = filepath.Join(out, head.Name)
-   err := os.MkdirAll(filepath.Dir(head.Name), os.ModePerm)
-   if err != nil {
-      return err
-   }
-   switch head.Typeflag {
-   case tar.TypeReg:
-      data, err := io.ReadAll(in)
-      if err != nil {
-         return err
-      }
-      return os.WriteFile(head.Name, data, os.ModePerm)
-   case tar.TypeLink:
-      _, err := os.Stat(head.Name)
-      if err != nil {
-         return os.Link(filepath.Join(out, head.Linkname), head.Name)
-      }
-   }
-   return nil
-}
-
 func Zip(in, dir string, level int) error {
    read, err := zip.OpenReader(in)
    if err != nil {
@@ -100,10 +100,10 @@ func Zip(in, dir string, level int) error {
          return err
       }
       head.Name = filepath.Join(dir, strip(head.Name, level))
-      if err := os.MkdirAll(filepath.Dir(head.Name), os.ModePerm); err != nil {
+      if err := os.MkdirAll(filepath.Dir(head.Name), 0666); err != nil {
          return err
       }
-      if err := os.WriteFile(head.Name, data, os.ModePerm); err != nil {
+      if err := os.WriteFile(head.Name, data, 0777); err != nil {
          return err
       }
    }

@@ -39,7 +39,7 @@ func download(in, out string) error {
    if err != nil {
       return err
    }
-   return os.WriteFile(out, data, os.ModePerm)
+   return os.WriteFile(out, data, 0666)
 }
 
 func main() {
@@ -50,7 +50,8 @@ func main() {
    home = filepath.Join(home, "nursery/c")
    for _, file := range files {
       home_file := filepath.Join(home, file)
-      if err := download(mirror + file, home_file); err != nil {
+      err := download(mirror + file, home_file)
+      if err != nil {
          panic(err)
       }
       if err := extract(home_file, `D:\c`); err != nil {

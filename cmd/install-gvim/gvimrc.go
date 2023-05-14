@@ -7,5 +7,5 @@ func do_gvimrc(home string) error {
    if err != nil {
       return err
    }
-   return os.WriteFile(home + "/_gvimrc", data, os.ModePerm)
+   return os.WriteFile(home + "/_gvimrc", data, 0666)
 }

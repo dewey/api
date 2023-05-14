@@ -16,14 +16,14 @@ func download(in, out string) error {
       return err
    }
    defer res.Body.Close()
-   if err := os.MkdirAll(filepath.Dir(out), os.ModePerm); err != nil {
+   if err := os.MkdirAll(filepath.Dir(out), 0666); err != nil {
       return err
    }
    data, err := io.ReadAll(res.Body)
    if err != nil {
       return err
    }
-   return os.WriteFile(out, data, os.ModePerm)
+   return os.WriteFile(out, data, 0666)
 }
 
 const vim_installer =
