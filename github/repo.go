@@ -5,9 +5,10 @@ import (
    "encoding/json"
    "net/http"
    "os"
+   "strings"
 )
 
-func sign_in(name string) ([]string, error) {
+func user_info(name string) ([]string, error) {
    data, err := os.ReadFile(name)
    if err != nil {
       return nil, err
@@ -16,7 +17,6 @@ func sign_in(name string) ([]string, error) {
 }
 
 func (r repository) set_description() (*http.Response, error) {
-   // Body
    body, err := json.Marshal(map[string]string{
       "description": r.description,
       "homepage": r.homepage,
@@ -28,15 +28,18 @@ func (r repository) set_description() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   account, err := sign_in(home + "/Documents/github.txt")
+   user, err := user_info(home + "/Documents/github.txt")
    if err != nil {
       return nil, err
    }
    req, err := http.NewRequest(
-      "PATCH", "https://api.github.com/repos/" + account[0] + "/" + r.name,
+      "PATCH", "https://api.github.com/repos/" + user[0] + "/" + r.name,
       bytes.NewReader(body),
    )
-   req.SetBasicAuth(account[0], account[1])
+   if err != nil {
+      return nil, err
+   }
+   req.SetBasicAuth(user[0], user[1])
    return new(http.Transport).RoundTrip(req)
 }
 
@@ -51,16 +54,19 @@ func (r repository) set_topics() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   account, err := sign_in(home + "/Documents/github.json")
+   user, err := user_info(home + "/Documents/github.json")
    if err != nil {
       return nil, err
    }
    req, err := http.NewRequest(
       "PUT",
-      "https://api.github.com/repos/" + account[0] + "/" + r.name + "/topics",
+      "https://api.github.com/repos/" + user[0] + "/" + r.name + "/topics",
       bytes.NewReader(body),
    )
-   req.SetBasicAuth(account[0], account[1])
+   if err != nil {
+      return nil, err
+   }
+   req.SetBasicAuth(user[0], user[1])
    return new(http.Transport).RoundTrip(req)
 }
 

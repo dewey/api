@@ -6,7 +6,7 @@ import (
    "strings"
 )
 
-func sign_in(name string) ([]string, error) {
+func user_info(name string) ([]string, error) {
    data, err := os.ReadFile(name)
    if err != nil {
       return nil, err
@@ -19,7 +19,7 @@ func main() {
    if err != nil {
       panic(err)
    }
-   account, err := sign_in(home + "/Documents/github.txt")
+   user, err := user_info(home + "/Documents/github.txt")
    if err != nil {
       panic(err)
    }
@@ -28,10 +28,10 @@ func main() {
       switch {
       case strings.HasPrefix(prompt, "Username"):
          fmt.Fprintln(os.Stderr, "Username")
-         fmt.Println(account[0])
+         fmt.Println(user[0])
       case strings.HasPrefix(prompt, "Password"):
          fmt.Fprintln(os.Stderr, "Password")
-         fmt.Println(account[1])
+         fmt.Println(user[1])
       }
    }
 }

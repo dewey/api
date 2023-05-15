@@ -1,7 +1,6 @@
 package main
 
 import (
-   "2a.pages.dev/rosso/http"
    "flag"
    "time"
 )
@@ -16,7 +15,6 @@ func main() {
    var f flags
    flag.StringVar(&f.address, "a", "", "address")
    flag.StringVar(&f.language, "lang", "en", "language")
-   flag.IntVar(&http.Default_Client.Log_Level, "log", 0, "log level")
    flag.DurationVar(&f.sleep, "s", 99*time.Millisecond, "sleep")
    flag.Parse()
    if f.address != "" {

@@ -33,7 +33,7 @@ func (u user) update() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   account, err := sign_in(home + "/Documents/github.txt")
+   user, err := user_info(home + "/Documents/github.txt")
    if err != nil {
       return nil, err
    }
@@ -42,6 +42,9 @@ func (u user) update() (*http.Response, error) {
       "https://api.github.com/user",
       bytes.NewReader(body),
    )
-   req.SetBasicAuth(account[0], account[1])
+   if err != nil {
+      return nil, err
+   }
+   req.SetBasicAuth(user[0], user[1])
    return new(http.Transport).RoundTrip(req)
 }

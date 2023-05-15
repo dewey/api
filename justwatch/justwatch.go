@@ -1,10 +1,49 @@
 package justwatch
 
 import (
-   "2a.pages.dev/rosso/http"
+   "bytes"
    "encoding/json"
+   "net/http"
    "strings"
 )
+
+func (v Variables) Details() (*Details, error) {
+   body, err := func() ([]byte, error) {
+      var d details_request
+      d.Query = graphQL_compact(query)
+      d.Variables = v
+      return json.Marshal(d)
+   }()
+   if err != nil {
+      return nil, err
+   }
+   res, err := http.Post(
+      "https://apis.justwatch.com/graphql", "application/json",
+      bytes.NewReader(body),
+   )
+   if err != nil {
+      return nil, err
+   }
+   defer res.Body.Close()
+   detail := new(Details)
+   if err := json.NewDecoder(res.Body).Decode(detail); err != nil {
+      return nil, err
+   }
+   return detail, nil
+}
+
+func New_URLs(ref string) (*URLs, error) {
+   res, err := http.Get("https://apis.justwatch.com/content/urls?path=" + ref)
+   if err != nil {
+      return nil, err
+   }
+   defer res.Body.Close()
+   content := new(URLs)
+   if err := json.NewDecoder(res.Body).Decode(content); err != nil {
+      return nil, err
+   }
+   return content, nil
+}
 
 // this is better than strings.Replace and strings.ReplaceAll
 func graphQL_compact(s string) string {
@@ -100,46 +139,3 @@ type Variables struct {
    Full_Path string `json:"fullPath"`
 }
 
-func New_URLs(path string) (*URLs, error) {
-   req := http.Get()
-   req.URL.Host = "apis.justwatch.com"
-   req.URL.Path = "/content/urls"
-   req.URL.RawQuery = "path=" + path
-   req.URL.Scheme = "https"
-   res, err := http.Default_Client.Do(req)
-   if err != nil {
-      return nil, err
-   }
-   defer res.Body.Close()
-   content := new(URLs)
-   if err := json.NewDecoder(res.Body).Decode(content); err != nil {
-      return nil, err
-   }
-   return content, nil
-}
-
-func (v Variables) Details() (*Details, error) {
-   var r details_request
-   r.Query = graphQL_compact(query)
-   r.Variables = v
-   body, err := json.Marshal(r)
-   if err != nil {
-      return nil, err
-   }
-   req := http.Post()
-   req.Body_Bytes(body)
-   req.Header.Set("Content-Type", "application/json")
-   req.URL.Host = "apis.justwatch.com"
-   req.URL.Path = "/graphql"
-   req.URL.Scheme = "https"
-   res, err := http.Default_Client.Do(req)
-   if err != nil {
-      return nil, err
-   }
-   defer res.Body.Close()
-   detail := new(Details)
-   if err := json.NewDecoder(res.Body).Decode(detail); err != nil {
-      return nil, err
-   }
-   return detail, nil
-}
