@@ -54,7 +54,7 @@ func (r repository) set_topics() (*http.Response, error) {
    if err != nil {
       return nil, err
    }
-   user, err := user_info(home + "/Documents/github.json")
+   user, err := user_info(home + "/Documents/github.txt")
    if err != nil {
       return nil, err
    }
