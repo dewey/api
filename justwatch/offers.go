@@ -65,45 +65,10 @@ func sort_keys[M ~map[string]V, V any](group M) []string {
    return keys
 }
 
-var countries = map[string]string{
-   "AG": "Antigua and Barbuda",
-   "AU": "Australia",
-   "BB": "Barbados",
-   "BM": "Bermuda",
-   "BS": "Bahamas",
-   "CA": "Canada",
-   "GB": "United Kingdom",
-   "DK": "Denmark",
-   "FJ": "Fiji",
-   "GG": "Guernsey",
-   "GH": "Ghana",
-   "GI": "Gibraltar",
-   "ID": "Indonesia",
-   "IE": "Ireland",
-   "IN": "India",
-   "JM": "Jamaica",
-   "KE": "Kenya",
-   "LC": "Saint Lucia",
-   "MY": "Malaysia",
-   "NG": "Nigeria",
-   "NL": "Netherlands",
-   "NO": "Norway",
-   "NZ": "New Zealand",
-   "PH": "Philippines",
-   "SG": "Singapore",
-   "TC": "Turks and Caicos",
-   "TH": "Thailand",
-   "TT": "Trinidad and Tobago",
-   "UG": "Uganda",
-   "US": "United States",
-   "ZA": "South Africa",
-   "ZM": "Zambia",
-}
-
 func get_country(code string) (string, error) {
-   country := countries[code]
-   if country == "" {
-      return "", fmt.Errorf("invalid country code %q", code)
+   country, found := countries[code]
+   if !found {
+      return "", fmt.Errorf("country code %q not found", code)
    }
    return country, nil
 }
@@ -123,4 +88,40 @@ const tab = "   "
 var buy_rent = map[string]bool{
    "BUY": true,
    "RENT": true,
+}
+
+// github.com/mullvad/mullvadvpn-app/blob/main/gui/locales/relay-locations.pot
+var countries = map[string]string{
+   "AG": "Antigua and Barbuda",
+   "AU": "Australia (Mullvad)",
+   "BB": "Barbados",
+   "BM": "Bermuda",
+   "BS": "Bahamas",
+   "CA": "Canada (Mullvad)",
+   "GB": "United Kingdom (Mullvad)",
+   "DK": "Denmark (Mullvad)",
+   "FJ": "Fiji",
+   "GG": "Guernsey",
+   "GH": "Ghana",
+   "GI": "Gibraltar",
+   "ID": "Indonesia",
+   "IE": "Ireland (Mullvad)",
+   "IN": "India (Mullvad)",
+   "JM": "Jamaica",
+   "KE": "Kenya",
+   "LC": "Saint Lucia",
+   "MY": "Malaysia",
+   "NG": "Nigeria",
+   "NL": "Netherlands (Mullvad)",
+   "NO": "Norway (Mullvad)",
+   "NZ": "New Zealand (Mullvad)",
+   "PH": "Philippines",
+   "SG": "Singapore (Mullvad)",
+   "TC": "Turks and Caicos",
+   "TH": "Thailand",
+   "TT": "Trinidad and Tobago",
+   "UG": "Uganda",
+   "US": "United States (Mullvad)",
+   "ZA": "South Africa (Mullvad)",
+   "ZM": "Zambia",
 }

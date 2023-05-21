@@ -138,4 +138,3 @@ type Variables struct {
    Country_Code string `json:"country"`
    Full_Path string `json:"fullPath"`
 }
-

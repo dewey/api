@@ -14,42 +14,19 @@ import (
 )
 
 func new_server(version string) string {
-   var buf strings.Builder
-   buf.WriteString("https://github.com/frida/frida/releases/download/")
-   buf.WriteString(version)
-   buf.WriteString("/frida-server-")
-   buf.WriteString(version)
-   buf.WriteString("-android-x86.xz")
-   return buf.String()
+   var b strings.Builder
+   b.WriteString("https://github.com/frida/frida/releases/download/")
+   b.WriteString(version)
+   b.WriteString("/frida-server-")
+   b.WriteString(version)
+   b.WriteString("-android-x86.xz")
+   return b.String()
 }
 
 func stem(s string) string {
    base := filepath.Base(s)
    ext := filepath.Ext(base)
    return base[:len(base)-len(ext)]
-}
-
-func download_server(in, out string) error {
-   fmt.Println("Stat", out)
-   _, err := os.Stat(out)
-   if err == nil {
-      return nil
-   }
-   fmt.Println("GET", in)
-   res, err := http.Get(in)
-   if err != nil {
-      return err
-   }
-   defer res.Body.Close()
-   read, err := xz.NewReader(res.Body, 0)
-   if err != nil {
-      return err
-   }
-   data, err := io.ReadAll(read)
-   if err != nil {
-      return err
-   }
-   return os.WriteFile(out, data, 0777)
 }
 
 type flags struct {
@@ -95,11 +72,11 @@ func main() {
          panic(err)
       }
       server := new_server(version)
-      cache_server := filepath.Join(home, "nursery/frida", stem(server))
-      if err := download_server(server, cache_server); err != nil {
+      home += "/Documents/" + stem(server)
+      if err := download_server(server, home); err != nil {
          panic(err)
       }
-      if err := f.run(cache_server); err != nil {
+      if err := f.run(home); err != nil {
          panic(err)
       }
    } else {
@@ -132,4 +109,27 @@ func (f flags) run(server string) error {
       }
    }
    return nil
+}
+
+func download_server(in, out string) error {
+   fmt.Println("Stat", out)
+   _, err := os.Stat(out)
+   if err == nil {
+      return nil
+   }
+   fmt.Println("GET", in)
+   res, err := http.Get(in)
+   if err != nil {
+      return err
+   }
+   defer res.Body.Close()
+   read, err := xz.NewReader(res.Body, 0)
+   if err != nil {
+      return err
+   }
+   data, err := io.ReadAll(read)
+   if err != nil {
+      return err
+   }
+   return os.WriteFile(out, data, 0777)
 }
