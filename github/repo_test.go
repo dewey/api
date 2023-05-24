@@ -60,7 +60,6 @@ var repos = []repository{
       topics: []string{
          "dash",
          "hls",
-         "ja3",
          "json",
          "mp4",
          "protobuf",
@@ -71,7 +70,6 @@ var repos = []repository{
       description: "TLS library, providing low-level access to the ClientHello for mimicry purposes",
       homepage: "https://godocs.io/2a.pages.dev/tls",
       name: "tls",
-      topics: []string{"ja3"},
    },
    {
       name: "umber",
