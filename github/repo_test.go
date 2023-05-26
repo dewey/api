@@ -70,6 +70,11 @@ var repos = []repository{
       description: "TLS library, providing low-level access to the ClientHello for mimicry purposes",
       homepage: "https://godocs.io/2a.pages.dev/tls",
       name: "tls",
+      topics: []string{
+         "anticensorship",
+         "censorship-circumvention",
+         "crypto",
+      }     
    },
    {
       name: "umber",
