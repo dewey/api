@@ -10,7 +10,7 @@ var patterns = []string{
    `C:\Users\Steven\.android`,
    `C:\Users\Steven\.cargo`,
    `C:\Users\Steven\AppData\Local\Android Open Source Project`,
-   `C:\Users\Steven\AppData\Local\Android\Sdk\system-images\android-22`,
+   `C:\Users\Steven\AppData\Local\Android\Sdk\system-images\android-*`,
    `C:\Users\Steven\AppData\Local\Google`,
    `C:\Users\Steven\AppData\Local\Mozilla\Firefox\Profiles\*.default-release\cache2`,
    `C:\Users\Steven\AppData\Local\go-build`,
