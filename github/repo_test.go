@@ -6,6 +6,20 @@ import (
    "time"
 )
 
+func Test_Description(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_description()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}
+
 func Test_Topics(t *testing.T) {
    for _, repo := range repos {
       if repo.topics != nil {
@@ -74,25 +88,10 @@ var repos = []repository{
          "android",
          "censorship-circumvention",
          "crypto",
-      }     
+      } ,    
    },
    {
       name: "umber",
       homepage: "https://2e.pages.dev/umber",
    },
 }
-
-func Test_Description(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_description()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}
-

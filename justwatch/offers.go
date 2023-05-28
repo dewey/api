@@ -7,6 +7,48 @@ import (
    "strings"
 )
 
+// github.com/mullvad/mullvadvpn-app/blob/main/gui/locales/relay-locations.pot
+var countries = map[string]string{
+   "AG": "Antigua and Barbuda",
+   "AU": "Australia (Mullvad)",
+   "BB": "Barbados",
+   "BM": "Bermuda",
+   "BS": "Bahamas",
+   "BZ": "Belize",
+   "CA": "Canada (Mullvad)",
+   "CM": "Cameroon",
+   "DK": "Denmark (Mullvad)",
+   "FJ": "Fiji",
+   "GB": "United Kingdom (Mullvad)",
+   "GG": "Guernsey",
+   "GH": "Ghana",
+   "GI": "Gibraltar",
+   "GY": "Guyana",
+   "ID": "Indonesia",
+   "IE": "Ireland (Mullvad)",
+   "IN": "India (Mullvad)",
+   "JM": "Jamaica",
+   "KE": "Kenya",
+   "LC": "Saint Lucia",
+   "MW": "Malawi",
+   "MY": "Malaysia",
+   "NG": "Nigeria",
+   "NL": "Netherlands (Mullvad)",
+   "NO": "Norway (Mullvad)",
+   "NZ": "New Zealand (Mullvad)",
+   "PG": "Papua New Guinea",
+   "PH": "Philippines",
+   "SG": "Singapore (Mullvad)",
+   "TC": "Turks and Caicos",
+   "TH": "Thailand",
+   "TT": "Trinidad and Tobago",
+   "UG": "Uganda",
+   "US": "United States (Mullvad)",
+   "ZA": "South Africa (Mullvad)",
+   "ZM": "Zambia",
+   "ZW": "Zimbabwe",
+}
+
 // lets match Variables type
 func (o Offers) Text() (string, error) {
    var b strings.Builder
@@ -88,40 +130,4 @@ const tab = "   "
 var buy_rent = map[string]bool{
    "BUY": true,
    "RENT": true,
-}
-
-// github.com/mullvad/mullvadvpn-app/blob/main/gui/locales/relay-locations.pot
-var countries = map[string]string{
-   "AG": "Antigua and Barbuda",
-   "AU": "Australia (Mullvad)",
-   "BB": "Barbados",
-   "BM": "Bermuda",
-   "BS": "Bahamas",
-   "CA": "Canada (Mullvad)",
-   "GB": "United Kingdom (Mullvad)",
-   "DK": "Denmark (Mullvad)",
-   "FJ": "Fiji",
-   "GG": "Guernsey",
-   "GH": "Ghana",
-   "GI": "Gibraltar",
-   "ID": "Indonesia",
-   "IE": "Ireland (Mullvad)",
-   "IN": "India (Mullvad)",
-   "JM": "Jamaica",
-   "KE": "Kenya",
-   "LC": "Saint Lucia",
-   "MY": "Malaysia",
-   "NG": "Nigeria",
-   "NL": "Netherlands (Mullvad)",
-   "NO": "Norway (Mullvad)",
-   "NZ": "New Zealand (Mullvad)",
-   "PH": "Philippines",
-   "SG": "Singapore (Mullvad)",
-   "TC": "Turks and Caicos",
-   "TH": "Thailand",
-   "TT": "Trinidad and Tobago",
-   "UG": "Uganda",
-   "US": "United States (Mullvad)",
-   "ZA": "South Africa (Mullvad)",
-   "ZM": "Zambia",
 }

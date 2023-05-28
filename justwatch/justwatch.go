@@ -3,9 +3,25 @@ package justwatch
 import (
    "bytes"
    "encoding/json"
+   "fmt"
    "net/http"
    "strings"
 )
+
+func New_URLs(ref string) (*URLs, error) {
+   ref = "https://apis.justwatch.com/content/urls?path=" + ref
+   fmt.Println("GET", ref)
+   res, err := http.Get(ref)
+   if err != nil {
+      return nil, err
+   }
+   defer res.Body.Close()
+   content := new(URLs)
+   if err := json.NewDecoder(res.Body).Decode(content); err != nil {
+      return nil, err
+   }
+   return content, nil
+}
 
 func (v Variables) Details() (*Details, error) {
    body, err := func() ([]byte, error) {
@@ -30,19 +46,6 @@ func (v Variables) Details() (*Details, error) {
       return nil, err
    }
    return detail, nil
-}
-
-func New_URLs(ref string) (*URLs, error) {
-   res, err := http.Get("https://apis.justwatch.com/content/urls?path=" + ref)
-   if err != nil {
-      return nil, err
-   }
-   defer res.Body.Close()
-   content := new(URLs)
-   if err := json.NewDecoder(res.Body).Decode(content); err != nil {
-      return nil, err
-   }
-   return content, nil
 }
 
 // this is better than strings.Replace and strings.ReplaceAll
