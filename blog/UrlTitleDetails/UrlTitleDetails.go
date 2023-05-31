@@ -67,10 +67,6 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
         offerCount(country: $country, platform: $platform)
         offers(country: $country, platform: $platform) {
           monetizationType
-          package {
-            id
-            packageId
-          }
         }
         promotedBundles(country: $country, platform: $platform) {
           promotionUrl
@@ -78,73 +74,16 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
         availableTo(country: $country, platform: $platform) {
           availableCountDown(country: $country)
           availableToDate
-          package {
-            id
-            shortName
-          }
-        }
-        fallBackClips: content(country: "US", language: "en") {
-          videobusterClips: clips(providers: [VIDEOBUSTER]) {
-            externalId
-            provider
-          }
-          dailymotionClips: clips(providers: [DAILYMOTION]) {
-            externalId
-            provider
-          }
         }
         content(country: $country, language: $language) {
-          backdrops {
-            backdropUrl
-          }
-          clips {
-            externalId
-            provider
-          }
-          videobusterClips: clips(providers: [VIDEOBUSTER]) {
-            externalId
-            provider
-          }
-          dailymotionClips: clips(providers: [DAILYMOTION]) {
-            externalId
-            provider
-          }
-          videobusterClips: clips(providers: [VIDEOBUSTER]) {
-            externalId
-          }
-          externalIds {
-            imdbId
-          }
           fullPath
-          genres {
-            shortName
-          }
           posterUrl
           runtime
           isReleased
-          scoring {
-            imdbScore
-            imdbVotes
-            tmdbPopularity
-            tmdbScore
-          }
           shortDescription
           title
           originalReleaseYear
           originalReleaseDate
-          upcomingReleases(releaseTypes: DIGITAL) {
-            releaseCountDown(country: $country)
-            releaseDate
-            label
-          }
-          ... on MovieOrShowContent {
-            originalTitle
-            ageCertification
-            productionCountries
-          }
-          ... on SeasonContent {
-            seasonNumber
-          }
         }
       }
       ... on MovieOrShow {
@@ -159,9 +98,6 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
         }
         customlistEntries {
           createdAt
-          genericTitleList {
-            id
-          }
         }
       }
       ... on Movie {
@@ -181,16 +117,6 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
           id
           objectId
           objectType
-          availableTo(country: $country, platform: $platform) {
-            availableToDate
-            availableCountDown(country: $country)
-          }
-          content(country: $country, language: $language) {
-            posterUrl
-            seasonNumber
-            fullPath
-            isReleased
-          }
           show {
             id
             objectId
@@ -240,40 +166,12 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
           totalSeasonCount
           customlistEntries {
             createdAt
-            genericTitleList {
-              id
-            }
-          }
-          fallBackClips: content(country: "US", language: "en") {
-            videobusterClips: clips(providers: [VIDEOBUSTER]) {
-              externalId
-              provider
-            }
-            dailymotionClips: clips(providers: [DAILYMOTION]) {
-              externalId
-              provider
-            }
           }
           content(country: $country, language: $language) {
             title
             ageCertification
             fullPath
-            credits {
-              role
-              name
-              characterName
-              personId
-            }
             productionCountries
-            externalIds {
-              imdbId
-            }
-            upcomingReleases(releaseTypes: DIGITAL) {
-              releaseDate
-            }
-            backdrops {
-              backdropUrl
-            }
             posterUrl
             isReleased
           }
