@@ -65,16 +65,6 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
         objectType
         objectId
         offerCount(country: $country, platform: $platform)
-        offers(country: $country, platform: $platform) {
-          monetizationType
-        }
-        promotedBundles(country: $country, platform: $platform) {
-          promotionUrl
-        }
-        availableTo(country: $country, platform: $platform) {
-          availableCountDown(country: $country)
-          availableToDate
-        }
         content(country: $country, language: $language) {
           fullPath
           posterUrl
@@ -86,61 +76,12 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
           originalReleaseDate
         }
       }
-      ... on MovieOrShow {
-        watchlistEntry {
-          createdAt
-        }
-        likelistEntry {
-          createdAt
-        }
-        dislikelistEntry {
-          createdAt
-        }
-        customlistEntries {
-          createdAt
-        }
-      }
       ... on Movie {
         permanentAudiences
-        seenlistEntry {
-          createdAt
-        }
       }
       ... on Show {
         permanentAudiences
         totalSeasonCount
-        seenState(country: $country) {
-          progress
-          seenEpisodeCount
-        }
-        seasons(sortDirection: DESC) {
-          id
-          objectId
-          objectType
-          show {
-            id
-            objectId
-            objectType
-          }
-        }
-        recentEpisodes: episodes(
-          sortDirection: DESC
-          limit: 3
-          releasedInCountry: $country
-        ) {
-          id
-          objectId
-          content(country: $country, language: $language) {
-            title
-            shortDescription
-            episodeNumber
-            seasonNumber
-            isReleased
-          }
-          seenlistEntry {
-            createdAt
-          }
-        }
       }
       ... on Season {
         totalEpisodeCount
@@ -148,48 +89,6 @@ query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Lang
           id
           objectType
           objectId
-          seenlistEntry {
-            createdAt
-          }
-          content(country: $country, language: $language) {
-            title
-            shortDescription
-            episodeNumber
-            seasonNumber
-            isReleased
-          }
-        }
-        show {
-          id
-          objectId
-          objectType
-          totalSeasonCount
-          customlistEntries {
-            createdAt
-          }
-          content(country: $country, language: $language) {
-            title
-            ageCertification
-            fullPath
-            productionCountries
-            posterUrl
-            isReleased
-          }
-          seenState(country: $country) {
-            progress
-          }
-          watchlistEntry {
-            createdAt
-          }
-          dislikelistEntry {
-            createdAt
-          }
-          likelistEntry {
-            createdAt
-          }
-        }
-        seenState(country: $country) {
-          progress
         }
       }
     }
