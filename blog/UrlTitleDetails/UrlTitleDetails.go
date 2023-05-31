@@ -18,19 +18,21 @@ func main() {
    req.URL.Scheme = "https"
    req.Method = "POST"
    req.Header["Content-Type"] = []string{"application/json"}
+   //full_path := "/us/tv-show/orphan-black/season-1"
+   full_path := "/us/tv-show/orphan-black"
    req_body := fmt.Sprintf(`
    {
      "operationName": "GetUrlTitleDetails",
+     "query": %q,
      "variables": {
        "platform": "WEB",
-       "fullPath": "/us/tv-show/orphan-black/season-1",
        "language": "en",
        "country": "US",
-       "episodeMaxLimit": 20
-     },
-     "query": %q
+       "episodeMaxLimit": 20,
+       "fullPath": %q
+     }
    }
-   `, query)
+   `, query, full_path)
    req.Body = io.NopCloser(strings.NewReader(req_body))
    res, err := new(http.Transport).RoundTrip(&req)
    if err != nil {
@@ -41,6 +43,7 @@ func main() {
    if err != nil {
       panic(err)
    }
+   fmt.Println(string(res_body))
    if bytes.Contains(res_body, []byte("tse371404")) {
       fmt.Println("pass")
    } else {
@@ -49,46 +52,17 @@ func main() {
 }
 
 const query = `
-query GetUrlTitleDetails($fullPath: String!, $country: Country!, $language: Language!, $episodeMaxLimit: Int, $platform: Platform! = WEB) {
+query GetUrlTitleDetails($fullPath: String!) {
   url(fullPath: $fullPath) {
-    id
-    metaDescription
-    metaKeywords
-    metaRobots
-    metaTitle
-    heading1
-    heading2
-    htmlContent
     node {
-      id
-      ... on MovieOrShowOrSeason {
-        objectType
-        objectId
-        offerCount(country: $country, platform: $platform)
-        content(country: $country, language: $language) {
-          fullPath
-          posterUrl
-          runtime
-          isReleased
-          shortDescription
-          title
-          originalReleaseYear
-          originalReleaseDate
+      ... on Season {
+        episodes() {
+          id
         }
       }
-      ... on Movie {
-        permanentAudiences
-      }
       ... on Show {
-        permanentAudiences
-        totalSeasonCount
-      }
-      ... on Season {
-        totalEpisodeCount
-        episodes(limit: $episodeMaxLimit) {
+        episodes() {
           id
-          objectType
-          objectId
         }
       }
     }
