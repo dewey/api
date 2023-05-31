@@ -13,6 +13,11 @@ type title_details struct {
          Node struct {
             Episodes []struct {
                ID string
+               Content struct {
+                  Episode_Number int `json:"episodeNumber"`
+                  Season_Number int `json:"seasonNumber"`
+                  Title string
+               }
             }
          }
       }
@@ -22,7 +27,6 @@ type title_details struct {
 func new_title_details(full_path string) (*title_details, error) {
    req_body := fmt.Sprintf(`
    {
-     "operationName": "GetUrlTitleDetails",
      "query": %q,
      "variables": {
        "platform": "WEB",
@@ -53,16 +57,20 @@ func new_title_details(full_path string) (*title_details, error) {
 }
 
 const query = `
-query GetUrlTitleDetails($fullPath: String!) {
+query GetUrlTitleDetails(
+   $country: Country!
+   $fullPath: String!
+   $language: Language!
+) {
   url(fullPath: $fullPath) {
     node {
-      ... on Season {
-        episodes() {
-          id
-        }
-      }
       ... on Show {
         episodes() {
+          content(country: $country, language: $language) {
+            episodeNumber
+            seasonNumber
+            title
+          }
           id
         }
       }

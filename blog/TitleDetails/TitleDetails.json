@@ -1,160 +1,410 @@
 {
-  "data": {
-    "url": {
-      "node": {
-        "episodes": [
-          {
-            "id": "tse371397"
-          },
-          {
-            "id": "tse371404"
-          },
-          {
-            "id": "tse371405"
-          },
-          {
-            "id": "tse371419"
-          },
-          {
-            "id": "tse371413"
-          },
-          {
-            "id": "tse371424"
-          },
-          {
-            "id": "tse371427"
-          },
-          {
-            "id": "tse371439"
-          },
-          {
-            "id": "tse371434"
-          },
-          {
-            "id": "tse371435"
-          },
-          {
-            "id": "tse371400"
-          },
-          {
-            "id": "tse371407"
-          },
-          {
-            "id": "tse371411"
-          },
-          {
-            "id": "tse371415"
-          },
-          {
-            "id": "tse371414"
-          },
-          {
-            "id": "tse371418"
-          },
-          {
-            "id": "tse371423"
-          },
-          {
-            "id": "tse371428"
-          },
-          {
-            "id": "tse371430"
-          },
-          {
-            "id": "tse371433"
-          },
-          {
-            "id": "tse370913"
-          },
-          {
-            "id": "tse370914"
-          },
-          {
-            "id": "tse936549"
-          },
-          {
-            "id": "tse936550"
-          },
-          {
-            "id": "tse936551"
-          },
-          {
-            "id": "tse936552"
-          },
-          {
-            "id": "tse952473"
-          },
-          {
-            "id": "tse952474"
-          },
-          {
-            "id": "tse952475"
-          },
-          {
-            "id": "tse953244"
-          },
-          {
-            "id": "tse1086580"
-          },
-          {
-            "id": "tse1100046"
-          },
-          {
-            "id": "tse1100047"
-          },
-          {
-            "id": "tse1113488"
-          },
-          {
-            "id": "tse1113489"
-          },
-          {
-            "id": "tse1113490"
-          },
-          {
-            "id": "tse1113491"
-          },
-          {
-            "id": "tse1113492"
-          },
-          {
-            "id": "tse1118250"
-          },
-          {
-            "id": "tse1113493"
-          },
-          {
-            "id": "tse1255965"
-          },
-          {
-            "id": "tse1262011"
-          },
-          {
-            "id": "tse1262010"
-          },
-          {
-            "id": "tse1264890"
-          },
-          {
-            "id": "tse1264889"
-          },
-          {
-            "id": "tse1264891"
-          },
-          {
-            "id": "tse1268856"
-          },
-          {
-            "id": "tse1350812"
-          },
-          {
-            "id": "tse1384581"
-          },
-          {
-            "id": "tse1384582"
-          }
-        ]
-      }
-    }
+ "data": {
+  "url": {
+   "node": {
+    "episodes": [
+     {
+      "content": {
+       "episodeNumber": 1,
+       "seasonNumber": 1,
+       "title": "Natural Selection"
+      },
+      "id": "tse371397"
+     },
+     {
+      "content": {
+       "episodeNumber": 2,
+       "seasonNumber": 1,
+       "title": "Instinct"
+      },
+      "id": "tse371404"
+     },
+     {
+      "content": {
+       "episodeNumber": 3,
+       "seasonNumber": 1,
+       "title": "Variation Under Nature"
+      },
+      "id": "tse371405"
+     },
+     {
+      "content": {
+       "episodeNumber": 4,
+       "seasonNumber": 1,
+       "title": "Effects of External Conditions"
+      },
+      "id": "tse371419"
+     },
+     {
+      "content": {
+       "episodeNumber": 5,
+       "seasonNumber": 1,
+       "title": "Conditions of Existence"
+      },
+      "id": "tse371413"
+     },
+     {
+      "content": {
+       "episodeNumber": 6,
+       "seasonNumber": 1,
+       "title": "Variations Under Domestication"
+      },
+      "id": "tse371424"
+     },
+     {
+      "content": {
+       "episodeNumber": 7,
+       "seasonNumber": 1,
+       "title": "Parts Developed in an Unusual Manner"
+      },
+      "id": "tse371427"
+     },
+     {
+      "content": {
+       "episodeNumber": 8,
+       "seasonNumber": 1,
+       "title": "Entangled Bank"
+      },
+      "id": "tse371439"
+     },
+     {
+      "content": {
+       "episodeNumber": 9,
+       "seasonNumber": 1,
+       "title": "Unconscious Selection"
+      },
+      "id": "tse371434"
+     },
+     {
+      "content": {
+       "episodeNumber": 10,
+       "seasonNumber": 1,
+       "title": "Endless Forms Most Beautiful"
+      },
+      "id": "tse371435"
+     },
+     {
+      "content": {
+       "episodeNumber": 1,
+       "seasonNumber": 2,
+       "title": "Nature Under Constraint and Vexed"
+      },
+      "id": "tse371400"
+     },
+     {
+      "content": {
+       "episodeNumber": 2,
+       "seasonNumber": 2,
+       "title": "Governed by Sound Reason and True Religion"
+      },
+      "id": "tse371407"
+     },
+     {
+      "content": {
+       "episodeNumber": 3,
+       "seasonNumber": 2,
+       "title": "Mingling Its Own Nature with It"
+      },
+      "id": "tse371411"
+     },
+     {
+      "content": {
+       "episodeNumber": 4,
+       "seasonNumber": 2,
+       "title": "Governed as It Were by Chance"
+      },
+      "id": "tse371415"
+     },
+     {
+      "content": {
+       "episodeNumber": 5,
+       "seasonNumber": 2,
+       "title": "Ipsa Scientia Potestas Est"
+      },
+      "id": "tse371414"
+     },
+     {
+      "content": {
+       "episodeNumber": 6,
+       "seasonNumber": 2,
+       "title": "To Hound Nature in Her Wanderings"
+      },
+      "id": "tse371418"
+     },
+     {
+      "content": {
+       "episodeNumber": 7,
+       "seasonNumber": 2,
+       "title": "Knowledge of Causes, and Secret Motion of Things"
+      },
+      "id": "tse371423"
+     },
+     {
+      "content": {
+       "episodeNumber": 8,
+       "seasonNumber": 2,
+       "title": "Variable and Full of Perturbation"
+      },
+      "id": "tse371428"
+     },
+     {
+      "content": {
+       "episodeNumber": 9,
+       "seasonNumber": 2,
+       "title": "Things Which Have Never Yet Been Done"
+      },
+      "id": "tse371430"
+     },
+     {
+      "content": {
+       "episodeNumber": 10,
+       "seasonNumber": 2,
+       "title": "By Means Which Have Never Yet Been Tried"
+      },
+      "id": "tse371433"
+     },
+     {
+      "content": {
+       "episodeNumber": 1,
+       "seasonNumber": 3,
+       "title": "The Weight of This Combination"
+      },
+      "id": "tse370913"
+     },
+     {
+      "content": {
+       "episodeNumber": 2,
+       "seasonNumber": 3,
+       "title": "Transitory Sacrifices of Crisis"
+      },
+      "id": "tse370914"
+     },
+     {
+      "content": {
+       "episodeNumber": 3,
+       "seasonNumber": 3,
+       "title": "Formalized, Complex, and Costly"
+      },
+      "id": "tse936549"
+     },
+     {
+      "content": {
+       "episodeNumber": 4,
+       "seasonNumber": 3,
+       "title": "Newer Elements of Our Defense"
+      },
+      "id": "tse936550"
+     },
+     {
+      "content": {
+       "episodeNumber": 5,
+       "seasonNumber": 3,
+       "title": "Scarred by Many Past Frustrations"
+      },
+      "id": "tse936551"
+     },
+     {
+      "content": {
+       "episodeNumber": 6,
+       "seasonNumber": 3,
+       "title": "Certain Agony of the Battlefield"
+      },
+      "id": "tse936552"
+     },
+     {
+      "content": {
+       "episodeNumber": 7,
+       "seasonNumber": 3,
+       "title": "Community of Dreadful Fear and Hate"
+      },
+      "id": "tse952473"
+     },
+     {
+      "content": {
+       "episodeNumber": 8,
+       "seasonNumber": 3,
+       "title": "Ruthless in Purpose, and Insidious in Method"
+      },
+      "id": "tse952474"
+     },
+     {
+      "content": {
+       "episodeNumber": 9,
+       "seasonNumber": 3,
+       "title": "Insolvent Phantom of Tomorrow"
+      },
+      "id": "tse952475"
+     },
+     {
+      "content": {
+       "episodeNumber": 10,
+       "seasonNumber": 3,
+       "title": "History Yet to Be Written"
+      },
+      "id": "tse953244"
+     },
+     {
+      "content": {
+       "episodeNumber": 1,
+       "seasonNumber": 4,
+       "title": "The Collapse of Nature"
+      },
+      "id": "tse1086580"
+     },
+     {
+      "content": {
+       "episodeNumber": 2,
+       "seasonNumber": 4,
+       "title": "Transgressive Border Crossing"
+      },
+      "id": "tse1100046"
+     },
+     {
+      "content": {
+       "episodeNumber": 3,
+       "seasonNumber": 4,
+       "title": "The Stigmata of Progress"
+      },
+      "id": "tse1100047"
+     },
+     {
+      "content": {
+       "episodeNumber": 4,
+       "seasonNumber": 4,
+       "title": "From Instinct to Rational Control"
+      },
+      "id": "tse1113488"
+     },
+     {
+      "content": {
+       "episodeNumber": 5,
+       "seasonNumber": 4,
+       "title": "Human Raw Material"
+      },
+      "id": "tse1113489"
+     },
+     {
+      "content": {
+       "episodeNumber": 6,
+       "seasonNumber": 4,
+       "title": "The Scandal of Altruism"
+      },
+      "id": "tse1113490"
+     },
+     {
+      "content": {
+       "episodeNumber": 7,
+       "seasonNumber": 4,
+       "title": "The Antisocialism of Sex"
+      },
+      "id": "tse1113491"
+     },
+     {
+      "content": {
+       "episodeNumber": 8,
+       "seasonNumber": 4,
+       "title": "The Redesign of Natural Objects"
+      },
+      "id": "tse1113492"
+     },
+     {
+      "content": {
+       "episodeNumber": 9,
+       "seasonNumber": 4,
+       "title": "The Mitigation of Competition"
+      },
+      "id": "tse1118250"
+     },
+     {
+      "content": {
+       "episodeNumber": 10,
+       "seasonNumber": 4,
+       "title": "From Dancing Mice to Psychopaths"
+      },
+      "id": "tse1113493"
+     },
+     {
+      "content": {
+       "episodeNumber": 1,
+       "seasonNumber": 5,
+       "title": "The Few Who Dare"
+      },
+      "id": "tse1255965"
+     },
+     {
+      "content": {
+       "episodeNumber": 2,
+       "seasonNumber": 5,
+       "title": "Clutch of Greed"
+      },
+      "id": "tse1262011"
+     },
+     {
+      "content": {
+       "episodeNumber": 3,
+       "seasonNumber": 5,
+       "title": "Beneath Her Heart"
+      },
+      "id": "tse1262010"
+     },
+     {
+      "content": {
+       "episodeNumber": 4,
+       "seasonNumber": 5,
+       "title": "Let the Children and Childbearers Toil"
+      },
+      "id": "tse1264890"
+     },
+     {
+      "content": {
+       "episodeNumber": 5,
+       "seasonNumber": 5,
+       "title": "Ease for Idle Millionaires"
+      },
+      "id": "tse1264889"
+     },
+     {
+      "content": {
+       "episodeNumber": 6,
+       "seasonNumber": 5,
+       "title": "Manacled Slim Wrists"
+      },
+      "id": "tse1264891"
+     },
+     {
+      "content": {
+       "episodeNumber": 7,
+       "seasonNumber": 5,
+       "title": "Gag or Throttle"
+      },
+      "id": "tse1268856"
+     },
+     {
+      "content": {
+       "episodeNumber": 8,
+       "seasonNumber": 5,
+       "title": "Guillotines Decide"
+      },
+      "id": "tse1350812"
+     },
+     {
+      "content": {
+       "episodeNumber": 9,
+       "seasonNumber": 5,
+       "title": "One Fettered Slave"
+      },
+      "id": "tse1384581"
+     },
+     {
+      "content": {
+       "episodeNumber": 10,
+       "seasonNumber": 5,
+       "title": "To Right the Wrongs of Many"
+      },
+      "id": "tse1384582"
+     }
+    ]
+   }
   }
+ }
 }
