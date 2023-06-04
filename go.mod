@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	2a.pages.dev/rosso v1.6.5 // indirect
+	2a.pages.dev/rosso v1.6.6 // indirect
 	github.com/Eyevinn/mp4ff v0.35.0 // indirect
 	github.com/chmike/cmac-go v1.1.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
