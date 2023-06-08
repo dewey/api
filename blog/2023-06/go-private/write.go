@@ -19,5 +19,5 @@ func (f flags) write() error {
    if err != nil {
       return err
    }
-   return run("gofmt", "-w", "-r", "a._"+f.w_before+" -> a."+f.w_before, ".")
+   return run("gofmt", "-w", "-r", "net._"+f.w_before+" -> net."+f.w_before, ".")
 }

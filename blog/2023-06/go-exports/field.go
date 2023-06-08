@@ -7,6 +7,7 @@ func field_switch(f *ast.Field) {
       name.Name = to_lower(name.Name)
    }
    switch a := f.Type.(type) {
+   case *ast.ArrayType:
    case *ast.FuncType:
       for _, field := range a.Params.List {
          field_switch(field)

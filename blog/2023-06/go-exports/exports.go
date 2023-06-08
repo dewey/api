@@ -22,7 +22,8 @@ func to_lower(s string) string {
 
 func main() {
    fset := token.NewFileSet()
-   file, err := parser.ParseFile(fset, "tls/tls.go", nil, 0)
+   file, err := parser.ParseFile(fset, "tls/u_roller.go", nil, 0)
+   //file, err := parser.ParseFile(fset, "tls/tls.go", nil, 0)
    if err != nil {
       panic(err)
    }
