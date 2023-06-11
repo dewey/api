@@ -88,15 +88,15 @@ func Zip(in, dir string, level int) error {
       if head.Mode().IsDir() {
          continue
       }
-      in, err := head.Open()
+      rc, err := head.Open()
       if err != nil {
          return err
       }
-      data, err := io.ReadAll(in)
+      data, err := io.ReadAll(rc)
       if err != nil {
          return err
       }
-      if err := in.Close(); err != nil {
+      if err := rc.Close(); err != nil {
          return err
       }
       head.Name = filepath.Join(dir, strip(head.Name, level))
