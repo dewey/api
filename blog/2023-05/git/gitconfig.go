@@ -3,9 +3,9 @@ package main
 import "os"
 
 func do_config(home string) error {
-   data, err := os.ReadFile(".gitconfig")
+   text, err := os.ReadFile(".gitconfig")
    if err != nil {
       return err
    }
-   return os.WriteFile(home + "/.gitconfig", data, 0666)
+   return os.WriteFile(home + "/.gitconfig", text, 0666)
 }

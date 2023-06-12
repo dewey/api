@@ -10,6 +10,48 @@ import (
    "time"
 )
 
+func main() {
+   var f struct {
+      group string
+      r youtube.Request
+      release string
+   }
+   flag.StringVar(&f.group, "g", "", "MusicBrainz release group ID")
+   flag.StringVar(&f.release, "r", "", "MusicBrainz release ID")
+   flag.StringVar(&f.r.Video_ID, "y", "", "YouTube video ID")
+   flag.Parse()
+   switch {
+   case f.group != "":
+      group, err := musicbrainz.New_Release_Group(f.group)
+      if err != nil {
+         panic(err)
+      }
+      group.Sort()
+      if err := view_musicbrainz(group.Releases[0]); err != nil {
+         panic(err)
+      }
+   case f.release != "":
+      rel, err := musicbrainz.New_Release(f.release)
+      if err != nil {
+         panic(err)
+      }
+      if err := view_musicbrainz(rel); err != nil {
+         panic(err)
+      }
+   case f.r.Video_ID != "":
+      f.r.Mobile_Web()
+      play, err := f.r.Player(nil)
+      if err != nil {
+         panic(err)
+      }
+      if _, err := since_hours(play); err != nil {
+         panic(err)
+      }
+   default:
+      flag.Usage()
+   }
+}
+
 func since_hours(play *youtube.Player) (int, error) {
    date, err := play.Time()
    if err != nil {
@@ -40,7 +82,8 @@ func view_musicbrainz(rel *musicbrainz.Release) error {
       artists.WriteString(artist.Name)
       artists.WriteByte(' ')
    }
-   web := youtube.Mobile_Web()
+   var web youtube.Request
+   web.Mobile_Web()
    for _, media := range rel.Media {
       for _, track := range media.Tracks {
          search, err := web.Search(artists.String() + track.Title)
@@ -50,7 +93,8 @@ func view_musicbrainz(rel *musicbrainz.Release) error {
          for _, item := range search.Items() {
             video := item.Video_With_Context_Renderer
             if video != nil {
-               play, err := web.Player(video.Video_ID, nil)
+               web.Video_ID = video.Video_ID
+               play, err := web.Player(nil)
                if err != nil {
                   return err
                }
@@ -72,43 +116,3 @@ const (
    red = "\x1b[30;101m"
 )
 
-func main() {
-   var f struct {
-      group string
-      release string
-      video_ID string
-   }
-   flag.StringVar(&f.group, "g", "", "MusicBrainz release group ID")
-   flag.StringVar(&f.release, "r", "", "MusicBrainz release ID")
-   flag.StringVar(&f.video_ID, "y", "", "YouTube video ID")
-   flag.Parse()
-   switch {
-   case f.group != "":
-      group, err := musicbrainz.New_Release_Group(f.group)
-      if err != nil {
-         panic(err)
-      }
-      group.Sort()
-      if err := view_musicbrainz(group.Releases[0]); err != nil {
-         panic(err)
-      }
-   case f.release != "":
-      rel, err := musicbrainz.New_Release(f.release)
-      if err != nil {
-         panic(err)
-      }
-      if err := view_musicbrainz(rel); err != nil {
-         panic(err)
-      }
-   case f.video_ID != "":
-      play, err := youtube.Mobile_Web().Player(f.video_ID, nil)
-      if err != nil {
-         panic(err)
-      }
-      if _, err := since_hours(play); err != nil {
-         panic(err)
-      }
-   default:
-      flag.Usage()
-   }
-}

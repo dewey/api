@@ -12,11 +12,11 @@ var names = []string{
 
 func main() {
    for _, name := range names {
-      data, err := os.ReadFile(filepath.Base(name))
+      text, err := os.ReadFile(filepath.Base(name))
       if err != nil {
          panic(err)
       }
-      if err := os.WriteFile(name, data, 0777); err != nil {
+      if err := os.WriteFile(name, text, 0777); err != nil {
          panic(err)
       }
    }
