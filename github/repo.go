@@ -8,6 +8,13 @@ import (
    "strings"
 )
 
+type repository struct {
+   topics []string
+   name string
+   description string
+   homepage string
+}
+
 func user_info(name string) ([]string, error) {
    text, err := os.ReadFile(name)
    if err != nil {
@@ -68,11 +75,4 @@ func (r repository) set_topics() (*http.Response, error) {
    }
    req.SetBasicAuth(user[0], user[1])
    return new(http.Transport).RoundTrip(req)
-}
-
-type repository struct {
-   topics []string
-   name string
-   description string
-   homepage string
 }

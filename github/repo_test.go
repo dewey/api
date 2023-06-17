@@ -38,6 +38,11 @@ func Test_Topics(t *testing.T) {
 
 var repos = []repository{
    {
+      name: "exports",
+      description: "prints exported identifiers",
+      homepage: "https://godocs.io/2a.pages.dev/exports",
+   },
+   {
       description: "Download APK from Google Play or send API requests",
       homepage: "https://godocs.io/2a.pages.dev/googleplay",
       name: "googleplay",
