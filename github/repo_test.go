@@ -39,7 +39,7 @@ func Test_Topics(t *testing.T) {
 var repos = []repository{
    {
       name: "exports",
-      description: "prints exported identifiers",
+      description: "print exported identifiers",
       homepage: "https://godocs.io/2a.pages.dev/exports",
    },
    {
