@@ -6,6 +6,7 @@ import (
 )
 
 var names = []string{
+   `C:\Users\Steven\2a\nursery\ripgrep.txt`,
    `C:\Users\Steven\AppData\Local\Microsoft\Windows Terminal\settings.json`,
    `C:\Users\Steven\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`,
 }
@@ -16,7 +17,7 @@ func main() {
       if err != nil {
          panic(err)
       }
-      if err := os.WriteFile(name, text, 0777); err != nil {
+      if err := os.WriteFile(name, text, os.ModePerm); err != nil {
          panic(err)
       }
    }

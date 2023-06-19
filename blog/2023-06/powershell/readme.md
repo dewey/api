@@ -1,9 +1,20 @@
-# powershell-powershell
+# powershell
 
-Improve startup time by triggering initialization of additional types on
-background thread:
+I believe this:
 
-https://github.com/PowerShell/PowerShell/pull/18195
+https://github.com/PowerShell/PowerShell/releases/tag/v7.3.0
+
+is the first non-preview release to correctly escape this type of command:
+
+~~~
+curl.exe --trace trace.txt --json '{ "drink": "coffe" }' https://example.com
+~~~
+
+get this:
+
+~~~
+PowerShell-7.3.0-win-fxdependent.zip
+~~~
 
 ## scrollToTop
 

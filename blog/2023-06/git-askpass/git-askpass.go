@@ -19,7 +19,7 @@ func main() {
    if err != nil {
       panic(err)
    }
-   user, err := user_info(home + "/Documents/github.txt")
+   user, err := user_info(home + "/2a/nursery/github.txt")
    if err != nil {
       panic(err)
    }
