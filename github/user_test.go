@@ -7,7 +7,7 @@ import (
 
 func Test_User(t *testing.T) {
    u := user{
-      bio: "email srpen6@gmail.com, Discord srpen6#6983",
+      bio: "email srpen6@gmail.com, Discord srpen6",
       company: "looking for work",
       location: "Dallas",
       name: "Steven Penny",
