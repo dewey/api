@@ -2,6 +2,12 @@
 
 https://github.com/refraction-networking/utls/commit/2179f286
 
+## robhor/gochallenge5
+
+cannot create module
+
+https://github.com/robhor/gochallenge5/issues/1
+
 ## craig-peterson/unexport
 
 ~~~
@@ -90,17 +96,3 @@ https://github.com/ndob/unexport/issues/2
 can't find package:
 
 https://github.com/quasilyte/go-unexport/issues/1
-
-## robert-horvath/gochallenge5
-
-~~~
-github.com/robhor/gochallenge5/cmd/gounexport imports
-golang.org/x/tools/go/types: module golang.org/x/tools@latest found (v0.9.3),
-but does not contain package golang.org/x/tools/go/types
-~~~
-
-https://github.com/golangchallenge/GCSolutions/tree/master/aug15/normal/robert-horvath
-
-publish gochallenge5:
-
-https://github.com/robhor/WifiSignalStrengthView/issues/1
