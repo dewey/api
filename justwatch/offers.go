@@ -7,7 +7,6 @@ import (
    "strings"
 )
 
-// github.com/mullvad/mullvadvpn-app/blob/main/gui/locales/relay-locations.pot
 var countries = map[string]string{
    "AG": "Antigua and Barbuda",
    "AU": "Australia (Mullvad)",
@@ -26,7 +25,7 @@ var countries = map[string]string{
    "GY": "Guyana",
    "ID": "Indonesia",
    "IE": "Ireland (Mullvad)",
-   "IN": "India (Mullvad)",
+   "IN": "India",
    "JM": "Jamaica",
    "KE": "Kenya",
    "LC": "Saint Lucia",

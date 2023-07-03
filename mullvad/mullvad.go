@@ -2,28 +2,44 @@ package mullvad
 
 import (
    "encoding/json"
-   "io"
+   "net/http"
+   "sort"
 )
 
-type server []any
-
-func servers(r io.Reader) ([]server, error) {
-   var data struct {
-      Data []any
+func (r relays) countries() []string {
+   m := make(map[string]struct{})
+   for _, location := range r.Locations {
+      m[location.Country] = struct{}{}
    }
-   err := json.NewDecoder(r).Decode(&data)
+   var s []string
+   for country := range m {
+      s = append(s, country)
+   }
+   sort.Strings(s)
+   return s
+}
+
+type relays struct {
+   Locations map[string]struct {
+      Country string
+   }
+}
+
+func new_relays() (*relays, error) {
+   res, err := client.Get("https://api.mullvad.net/app/v1/relays")
    if err != nil {
       return nil, err
    }
-   var servs []server
-   indexes := data.Data[0].([]any)
-   for i, low := range indexes {
-      low := int(low.(float64))
-      high := len(data.Data)-1
-      if i+1 < len(indexes) {
-         high = int(indexes[i+1].(float64))
-      }
-      servs = append(servs, data.Data[low:high])
+   defer res.Body.Close()
+   relay := new(relays)
+   if err := json.NewDecoder(res.Body).Decode(relay); err != nil {
+      return nil, err
    }
-   return servs, nil
+   return relay, nil
+}
+
+var client = http.Client{
+   CheckRedirect: func(*http.Request, []*http.Request) error {
+      return http.ErrUseLastResponse
+   },
 }

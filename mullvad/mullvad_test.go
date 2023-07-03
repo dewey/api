@@ -2,21 +2,15 @@ package mullvad
 
 import (
    "fmt"
-   "os"
    "testing"
 )
 
-func Test_Server(t *testing.T) {
-   file, err := os.Open("__data.json")
+func Test_Relay(t *testing.T) {
+   relay, err := new_relays()
    if err != nil {
       t.Fatal(err)
    }
-   defer file.Close()
-   servs, err := servers(file)
-   if err != nil {
-      t.Fatal(err)
-   }
-   for _, serv := range servs {
-      fmt.Print(serv, "\n\n")
+   for _, country := range relay.countries() {
+      fmt.Println(country)
    }
 }
