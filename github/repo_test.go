@@ -6,41 +6,12 @@ import (
    "time"
 )
 
-func Test_Description(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_description()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}
-
-func Test_Topics(t *testing.T) {
-   for _, repo := range repos {
-      if repo.topics != nil {
-         res, err := repo.set_topics()
-         if err != nil {
-            t.Fatal(err)
-         }
-         if err := res.Body.Close(); err != nil {
-            t.Fatal(err)
-         }
-         fmt.Println(repo.name, res.Status)
-         time.Sleep(time.Second)
-      }
-   }
-}
-
 var repos = []repository{
    {
-      name: "exports",
-      description: "print exported identifiers",
-      homepage: "https://godocs.io/2a.pages.dev/exports",
+      description: "Cisco Android and web authentication",
+      homepage: "https://godocs.io/2a.pages.dev/meraki",
+      name: "meraki",
+      topics: []string{"2fa"},
    },
    {
       description: "Download APK from Google Play or send API requests",
@@ -99,4 +70,33 @@ var repos = []repository{
       name: "umber",
       homepage: "https://2e.pages.dev/umber",
    },
+}
+func Test_Description(t *testing.T) {
+   for _, repo := range repos {
+      res, err := repo.set_description()
+      if err != nil {
+         t.Fatal(err)
+      }
+      if err := res.Body.Close(); err != nil {
+         t.Fatal(err)
+      }
+      fmt.Println(repo.name, res.Status)
+      time.Sleep(time.Second)
+   }
+}
+
+func Test_Topics(t *testing.T) {
+   for _, repo := range repos {
+      if repo.topics != nil {
+         res, err := repo.set_topics()
+         if err != nil {
+            t.Fatal(err)
+         }
+         if err := res.Body.Close(); err != nil {
+            t.Fatal(err)
+         }
+         fmt.Println(repo.name, res.Status)
+         time.Sleep(time.Second)
+      }
+   }
 }
