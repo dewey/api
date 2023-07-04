@@ -1,17 +1,22 @@
 package main
 
 import (
+   "encoding/json"
    "fmt"
    "os"
    "strings"
 )
 
-func user_info(name string) ([]string, error) {
-   text, err := os.ReadFile(name)
+func user(name string) (map[string]string, error) {
+   b, err := os.ReadFile(name)
    if err != nil {
       return nil, err
    }
-   return strings.Split(string(text), "\n"), nil
+   var m map[string]string
+   if err := json.Unmarshal(b, &m); err != nil {
+      return nil, err
+   }
+   return m, nil
 }
 
 func main() {
@@ -19,7 +24,7 @@ func main() {
    if err != nil {
       panic(err)
    }
-   user, err := user_info(home + "/2a/nursery/github.txt")
+   u, err := user(home + "/github.json")
    if err != nil {
       panic(err)
    }
@@ -28,10 +33,10 @@ func main() {
       switch {
       case strings.HasPrefix(prompt, "Username"):
          fmt.Fprintln(os.Stderr, "Username")
-         fmt.Println(user[0])
+         fmt.Println(u["username"])
       case strings.HasPrefix(prompt, "Password"):
          fmt.Fprintln(os.Stderr, "Password")
-         fmt.Println(user[1])
+         fmt.Println(u["password"])
       }
    }
 }

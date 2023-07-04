@@ -1,5 +1,5 @@
 # 2023-06-18
-$env:RIPGREP_CONFIG_PATH = 'C:\Users\Steven\2a\nursery\ripgrep.txt'
+$env:RIPGREP_CONFIG_PATH = 'C:\Users\Steven\ripgrep.txt'
 
 # 2023-06-06
 $MaximumHistoryCount = 9999

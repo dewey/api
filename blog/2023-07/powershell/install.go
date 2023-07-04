@@ -6,7 +6,7 @@ import (
 )
 
 var names = []string{
-   `C:\Users\Steven\2a\nursery\ripgrep.txt`,
+   `C:\Users\Steven\ripgrep.txt`,
    `C:\Users\Steven\AppData\Local\Microsoft\Windows Terminal\settings.json`,
    `C:\Users\Steven\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`,
 }

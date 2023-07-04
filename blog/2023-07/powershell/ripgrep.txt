@@ -1,3 +1,2 @@
-# this file goes in C:\Users\Steven\Documents
 --smart-case
 --sort=path
