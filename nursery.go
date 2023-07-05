@@ -3,11 +3,24 @@ package nursery
 import (
    "archive/tar"
    "archive/zip"
+   "encoding/json"
    "github.com/xi2/xz"
    "io"
    "os"
    "path/filepath"
 )
+
+func User(name string) (map[string]string, error) {
+   b, err := os.ReadFile(name)
+   if err != nil {
+      return nil, err
+   }
+   var m map[string]string
+   if err := json.Unmarshal(b, &m); err != nil {
+      return nil, err
+   }
+   return m, nil
+}
 
 func create(head *tar.Header, in io.Reader, out string) error {
    head.Name = filepath.Join(out, head.Name)

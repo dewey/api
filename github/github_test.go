@@ -1,7 +1,9 @@
 package github
 
 import (
+   "2a.pages.dev/nursery"
    "fmt"
+   "os"
    "testing"
    "time"
 )
@@ -11,26 +13,50 @@ func Test_Topics(t *testing.T) {
    if err != nil {
       t.Fatal(err)
    }
-   u, err := user(home + "/github.json")
+   u, err := nursery.User(home + "/github.json")
    if err != nil {
       t.Fatal(err)
    }
    for _, repo := range repos {
       if repo.topics != nil {
-         res, err := repo.set_topics()
+         fmt.Println(repo.name)
+         err := repo.set_topics(u)
          if err != nil {
             t.Fatal(err)
          }
-         if err := res.Body.Close(); err != nil {
-            t.Fatal(err)
-         }
-         fmt.Println(repo.name, res.Status)
          time.Sleep(time.Second)
       }
    }
 }
 
+func Test_Description(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   u, err := nursery.User(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   for _, repo := range repos {
+      fmt.Println(repo.name)
+      err := repo.set_description(u)
+      if err != nil {
+         t.Fatal(err)
+      }
+      time.Sleep(time.Second)
+   }
+}
+
 func Test_User(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   m, err := nursery.User(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
    u := user{
       bio: "email srpen6@gmail.com, Discord srpen6",
       company: "looking for work",
@@ -38,26 +64,9 @@ func Test_User(t *testing.T) {
       name: "Steven Penny",
       website: "https://discord.com/invite/WWq6rFb8Rf",
    }
-   res, err := u.update()
-   if err != nil {
+   if err := u.update(m); err != nil {
       t.Fatal(err)
    }
-   if err := res.Body.Close(); err != nil {
-      t.Fatal(err)
-   }
-   fmt.Println(res.Status)
-}
-
-func user(name string) (map[string]string, error) {
-   b, err := os.ReadFile(name)
-   if err != nil {
-      return nil, err
-   }
-   var m map[string]string
-   if err := json.Unmarshal(b, &m); err != nil {
-      return nil, err
-   }
-   return m, nil
 }
 
 var repos = []repository{
@@ -75,11 +84,12 @@ var repos = []repository{
          // justwatch.com/us/provider/nbc
          "nbc",
          // justwatch.com/us/provider/paramount-plus
-         "paramount-plus",
+         // paramountplus.com
+         "paramount",
          // soundcloud.com
          "soundcloud",
          // justwatch.com/us/provider/the-roku-channel
-         "roku-channel",
+         "roku",
          // twitter.com
          "twitter",
          // widevine.com
@@ -136,16 +146,3 @@ var repos = []repository{
    },
 }
 
-func Test_Description(t *testing.T) {
-   for _, repo := range repos {
-      res, err := repo.set_description()
-      if err != nil {
-         t.Fatal(err)
-      }
-      if err := res.Body.Close(); err != nil {
-         t.Fatal(err)
-      }
-      fmt.Println(repo.name, res.Status)
-      time.Sleep(time.Second)
-   }
-}

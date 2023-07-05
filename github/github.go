@@ -44,7 +44,7 @@ type user struct {
 
 // REQUIRES USER SCOPE
 // docs.github.com/rest/users/users#update-the-authenticated-user
-func (u user) update(m map[string]string) (*http.Response, error) {
+func (u user) update(m map[string]string) error {
    body, err := func() ([]byte, error) {
       m := map[string]string{
          "bio": u.bio,
@@ -56,16 +56,24 @@ func (u user) update(m map[string]string) (*http.Response, error) {
       return json.MarshalIndent(m, "", " ")
    }()
    if err != nil {
-      return nil, err
+      return err
    }
    req, err := http.NewRequest(
       "PATCH", "https://api.github.com/user", bytes.NewReader(body),
    )
    if err != nil {
-      return nil, err
+      return err
    }
    req.SetBasicAuth(m["username"], m["password"])
-   return new(http.Transport).RoundTrip(req)
+   res, err := new(http.Transport).RoundTrip(req)
+   if err != nil {
+      return err
+   }
+   defer res.Body.Close()
+   if res.StatusCode != http.StatusOK {
+      return errors.New(res.Status)
+   }
+   return nil
 }
 
 type repository struct {
