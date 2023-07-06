@@ -71,6 +71,36 @@ func Test_User(t *testing.T) {
 
 var repos = []repository{
    {
+      description: "streaming",
+      homepage: "https://godocs.io/2a.pages.dev/stream",
+      name: "stream",
+      topics: []string{
+         "dash",
+         "hls",
+         "mp4",
+         "widevine",
+      },
+   },
+   {
+      name: "rosso",
+      description: "Data parsers and formatters",
+      homepage: "https://godocs.io/2a.pages.dev/rosso",
+      topics: []string{
+         "json",
+         "protobuf",
+         "xml",
+      },
+   },
+   {
+      description: "Download APK from Google Play or send API requests",
+      homepage: "https://godocs.io/2a.pages.dev/googleplay",
+      name: "googleplay",
+      topics: []string{
+         "android",
+         "google-play",
+      },
+   },
+   {
       name: "mech",
       description: "Download media or send API requests",
       homepage: "https://godocs.io/2a.pages.dev/mech",
@@ -99,15 +129,6 @@ var repos = []repository{
       },
    },
    {
-      description: "Download APK from Google Play or send API requests",
-      homepage: "https://godocs.io/2a.pages.dev/googleplay",
-      name: "googleplay",
-      topics: []string{
-         "android",
-         "google-play",
-      },
-   },
-   {
       description: "Cisco Android and web authentication",
       homepage: "https://godocs.io/2a.pages.dev/meraki",
       name: "meraki",
@@ -116,19 +137,6 @@ var repos = []repository{
    {
       name: "nursery",
       homepage: "https://godocs.io/2a.pages.dev/nursery",
-   },
-   {
-      name: "rosso",
-      description: "Data parsers and formatters",
-      homepage: "https://godocs.io/2a.pages.dev/rosso",
-      topics: []string{
-         "dash",
-         "hls",
-         "json",
-         "mp4",
-         "protobuf",
-         "xml",
-      },
    },
    {
       description: "low-level access to the ClientHello for mimicry purposes",
