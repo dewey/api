@@ -8,67 +8,6 @@ import (
    "time"
 )
 
-func Test_Topics(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   u, err := nursery.User(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   for _, repo := range repos {
-      if repo.topics != nil {
-         fmt.Println(repo.name)
-         err := repo.set_topics(u)
-         if err != nil {
-            t.Fatal(err)
-         }
-         time.Sleep(time.Second)
-      }
-   }
-}
-
-func Test_Description(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   u, err := nursery.User(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   for _, repo := range repos {
-      fmt.Println(repo.name)
-      err := repo.set_description(u)
-      if err != nil {
-         t.Fatal(err)
-      }
-      time.Sleep(time.Second)
-   }
-}
-
-func Test_User(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   m, err := nursery.User(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   u := user{
-      bio: "email srpen6@gmail.com, Discord srpen6",
-      company: "looking for work",
-      location: "Dallas",
-      name: "Steven Penny",
-      website: "https://discord.com/invite/WWq6rFb8Rf",
-   }
-   if err := u.update(m); err != nil {
-      t.Fatal(err)
-   }
-}
-
 var repos = []repository{
    {
       description: "streaming",
@@ -152,5 +91,66 @@ var repos = []repository{
       name: "umber",
       homepage: "https://2e.pages.dev/umber",
    },
+}
+
+func Test_Topics(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   u, err := nursery.User(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   for _, repo := range repos {
+      if repo.topics != nil {
+         fmt.Println(repo.name)
+         err := repo.set_topics(u)
+         if err != nil {
+            t.Fatal(err)
+         }
+         time.Sleep(time.Second)
+      }
+   }
+}
+
+func Test_Description(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   u, err := nursery.User(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   for _, repo := range repos {
+      fmt.Println(repo.name)
+      err := repo.set_description(u)
+      if err != nil {
+         t.Fatal(err)
+      }
+      time.Sleep(time.Second)
+   }
+}
+
+func Test_User(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   m, err := nursery.User(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   u := user{
+      bio: "email srpen6@gmail.com, Discord srpen6",
+      company: "looking for work",
+      location: "Dallas",
+      name: "Steven Penny",
+      website: "https://discord.com/invite/WWq6rFb8Rf",
+   }
+   if err := u.update(m); err != nil {
+      t.Fatal(err)
+   }
 }
 
