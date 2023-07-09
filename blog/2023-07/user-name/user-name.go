@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-   file, err := os.Open("american-english-insane")
+   file, err := os.Open("american-english")
    if err != nil {
       panic(err)
    }
@@ -39,7 +39,7 @@ func main() {
       words = append(words, word)
    }
    slices.Sort(words)
-   slices.Compact(words)
+   words = slices.Compact(words)
    for _, word := range words {
       fmt.Println(word)
    }
