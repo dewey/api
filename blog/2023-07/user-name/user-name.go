@@ -17,26 +17,20 @@ func main() {
    buf := bufio.NewScanner(file)
    var words []string
    for buf.Scan() {
-      word := strings.ToLower(buf.Text())
-      if len(word) != 3 {
+      before := buf.Text()
+      if len(before) != 4 {
          continue
       }
-      if word[0] == word[1] {
+      if strings.Contains(before, "'") {
          continue
       }
-      if word[0] == word[2] {
+      after := buf.Bytes()
+      slices.Sort(after)
+      after = slices.Compact(after)
+      if len(after) != 4 {
          continue
       }
-      if word[1] == word[2] {
-         continue
-      }
-      if strings.Contains(word, "'") {
-         continue
-      }
-      if strings.Contains(word, "l") {
-         continue
-      }
-      words = append(words, word)
+      words = append(words, strings.ToLower(before))
    }
    slices.Sort(words)
    words = slices.Compact(words)
