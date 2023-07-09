@@ -1,8 +1,8 @@
 package main
 
 import (
-   "bufio"
    "fmt"
+   "golang.org/x/exp/slices"
    "net/http"
    "net/url"
    "os"
@@ -16,18 +16,20 @@ func main() {
    req.URL = new(url.URL)
    req.URL.Host = "github.com"
    req.URL.Scheme = "https"
-   file, err := os.Open("four.txt")
-   if err != nil {
-      panic(err)
-   }
-   defer file.Close()
-   buf := bufio.NewScanner(file)
-   for buf.Scan() {
-      text := buf.Text()
-      if text <= "blog" {
+   i := 999
+   for {
+      i++
+      if i <= 1092 {
          continue
       }
-      req.URL.Path = "/" + text
+      before := fmt.Sprint(i)
+      after := []byte(before)
+      slices.Sort(after)
+      after = slices.Compact(after)
+      if len(after) < len(before) {
+         continue
+      }
+      req.URL.Path = "/" + before
       res, err := new(http.Transport).RoundTrip(req)
       if err != nil {
          panic(err)
@@ -35,12 +37,12 @@ func main() {
       if err := res.Body.Close(); err != nil {
          panic(err)
       }
-      fmt.Println(res.Status, text)
+      fmt.Println(res.Status, before)
       switch res.StatusCode {
       case http.StatusMovedPermanently:
          // do nothing
       case http.StatusNotFound:
-         file, err := os.Create(text)
+         file, err := os.Create(before)
          if err != nil {
             panic(err)
          }
