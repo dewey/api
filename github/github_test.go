@@ -10,34 +10,10 @@ import (
 
 var repos = []repository{
    {
-      description: "streaming",
-      homepage: "https://godocs.io/2a.pages.dev/stream",
-      name: "stream",
-      topics: []string{
-         "dash",
-         "hls",
-         "mp4",
-         "widevine",
-      },
-   },
-   {
-      name: "rosso",
-      description: "Data parsers and formatters",
-      homepage: "https://godocs.io/2a.pages.dev/rosso",
-      topics: []string{
-         "json",
-         "protobuf",
-         "xml",
-      },
-   },
-   {
       description: "Download APK from Google Play or send API requests",
-      homepage: "https://godocs.io/2a.pages.dev/googleplay",
-      name: "googleplay",
-      topics: []string{
-         "android",
-         "google-play",
-      },
+      homepage: "https://godocs.io/google-play.pages.dev",
+      name: "google-play",
+      topics: []string{"android"},
    },
    {
       name: "mech",
@@ -76,6 +52,35 @@ var repos = []repository{
    {
       name: "nursery",
       homepage: "https://godocs.io/2a.pages.dev/nursery",
+   },
+   {
+      name: "protobuf",
+      homepage: "https://godocs.io/protobuf.pages.dev",
+   },
+   {
+      name: "rosso",
+      description: "Data parsers and formatters",
+      homepage: "https://godocs.io/2a.pages.dev/rosso",
+      topics: []string{
+         "json",
+         "protobuf",
+         "xml",
+      },
+   },
+   {
+      name: "strconv",
+      homepage: "https://godocs.io/strconv.pages.dev",
+   },
+   {
+      description: "streaming",
+      homepage: "https://godocs.io/2a.pages.dev/stream",
+      name: "stream",
+      topics: []string{
+         "dash",
+         "hls",
+         "mp4",
+         "widevine",
+      },
    },
    {
       description: "low-level access to the ClientHello for mimicry purposes",
