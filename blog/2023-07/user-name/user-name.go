@@ -17,7 +17,7 @@ func main() {
    buf := bufio.NewScanner(file)
    var words []string
    for buf.Scan() {
-      before := buf.Text()
+      before := strings.ToLower(buf.Text())
       if len(before) != 4 {
          continue
       }
@@ -30,7 +30,7 @@ func main() {
       if len(after) != 4 {
          continue
       }
-      words = append(words, strings.ToLower(before))
+      words = append(words, before)
    }
    slices.Sort(words)
    words = slices.Compact(words)
