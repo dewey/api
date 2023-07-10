@@ -1,18 +1,31 @@
 package github
 
 import (
+   "encoding/json"
    "fmt"
    "os"
    "testing"
    "time"
 )
 
+func user_info(name string) (map[string]string, error) {
+   b, err := os.ReadFile(name)
+   if err != nil {
+      return nil, err
+   }
+   var m map[string]string
+   if err := json.Unmarshal(b, &m); err != nil {
+      return nil, err
+   }
+   return m, nil
+}
+
 func Test_Topics(t *testing.T) {
    home, err := os.UserHomeDir()
    if err != nil {
       t.Fatal(err)
    }
-   u, err := nursery.User(home + "/github.json")
+   u, err := user_info(home + "/github.json")
    if err != nil {
       t.Fatal(err)
    }
@@ -33,7 +46,7 @@ func Test_Description(t *testing.T) {
    if err != nil {
       t.Fatal(err)
    }
-   u, err := nursery.User(home + "/github.json")
+   u, err := user_info(home + "/github.json")
    if err != nil {
       t.Fatal(err)
    }
@@ -52,7 +65,7 @@ func Test_User(t *testing.T) {
    if err != nil {
       t.Fatal(err)
    }
-   m, err := nursery.User(home + "/github.json")
+   m, err := user_info(home + "/github.json")
    if err != nil {
       t.Fatal(err)
    }
@@ -70,13 +83,36 @@ func Test_User(t *testing.T) {
 
 var repos = []repository{
    {
+      name: "api",
+      homepage: "https://godocs.io/154.pages.dev/api",
+      topics: []string{
+         "github",
+         "justwatch",
+         "mullvad",
+         "musicbrainz",
+      },
+   },
+   {
+      name: "encoding",
+      description: "Data parsers and formatters",
+      topics: []string{
+         "dash",
+         "hls",
+         "json",
+         "mp4",
+         "protobuf",
+         "xml",
+      },
+      homepage: "https://godocs.io/154.pages.dev/encoding",
+   },
+   {
       description: "Download APK from Google Play or send API requests",
       name: "google-play",
       topics: []string{"android"},
       homepage: "https://godocs.io/154.pages.dev/google-play",
    },
    {
-      name: "mech",
+      name: "media",
       description: "Download media or send API requests",
       topics: []string{
          "amc",
@@ -93,26 +129,8 @@ var repos = []repository{
       homepage: "https://godocs.io/154.pages.dev/media",
    },
    {
-      name: "encoding",
-      description: "Data parsers and formatters",
-      topics: []string{
-         "dash",
-         "hls",
-         "json",
-         "mp4",
-         "protobuf",
-         "xml",
-      },
-      homepage: "https://godocs.io/154.pages.dev/encoding",
-   },
-   {
       name: "strconv",
       homepage: "https://godocs.io/154.pages.dev/strconv",
-   },
-   {
-      name: "widevine",
-      description: "DRM",
-      homepage: "https://godocs.io/154.pages.dev/widevine",
    },
    {
       description: "low-level access to the ClientHello for mimicry purposes",
@@ -127,5 +145,10 @@ var repos = []repository{
    {
       name: "umber",
       homepage: "https://154.pages.dev/umber",
+   },
+   {
+      name: "widevine",
+      description: "DRM",
+      homepage: "https://godocs.io/154.pages.dev/widevine",
    },
 }
