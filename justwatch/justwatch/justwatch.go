@@ -1,7 +1,7 @@
 package main
 
 import (
-   "2a.pages.dev/nursery/justwatch"
+   "154.pages.dev/api/justwatch"
    "fmt"
    "net/url"
    "time"

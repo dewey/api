@@ -1,4 +1,4 @@
-# Nursery
+# API
 
 > Janice you can, because, we want the same thing. We, we wanna be happy. We
 > want love.
@@ -8,5 +8,3 @@
 > [Barry (2018)](//f002.backblazeb2.com/file/ql8mlh/barry-know-your-truth.mp4)
 
 Small packages and programs
-
-https://godocs.io/2a.pages.dev/nursery

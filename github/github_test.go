@@ -1,102 +1,11 @@
 package github
 
 import (
-   "2a.pages.dev/nursery"
    "fmt"
    "os"
    "testing"
    "time"
 )
-
-var repos = []repository{
-   {
-      description: "Download APK from Google Play or send API requests",
-      homepage: "https://godocs.io/google-play.pages.dev",
-      name: "google-play",
-      topics: []string{"android"},
-   },
-   {
-      name: "mech",
-      description: "Download media or send API requests",
-      homepage: "https://godocs.io/2a.pages.dev/mech",
-      topics: []string{
-         // justwatch.com/us/provider/amc-plus
-         "amc-plus",
-         // bandcamp.com
-         "bandcamp",
-         // justwatch.com/ca/provider/cbc-gem
-         "cbc-gem",
-         // justwatch.com/us/provider/nbc
-         "nbc",
-         // justwatch.com/us/provider/paramount-plus
-         // paramountplus.com
-         "paramount",
-         // soundcloud.com
-         "soundcloud",
-         // justwatch.com/us/provider/the-roku-channel
-         "roku",
-         // twitter.com
-         "twitter",
-         // widevine.com
-         "widevine",
-         // youtube.com
-         "youtube",
-      },
-   },
-   {
-      description: "Cisco Android and web authentication",
-      homepage: "https://godocs.io/2a.pages.dev/meraki",
-      name: "meraki",
-      topics: []string{"2fa"},
-   },
-   {
-      name: "nursery",
-      homepage: "https://godocs.io/2a.pages.dev/nursery",
-   },
-   {
-      name: "protobuf",
-      homepage: "https://godocs.io/protobuf.pages.dev",
-   },
-   {
-      name: "rosso",
-      description: "Data parsers and formatters",
-      homepage: "https://godocs.io/2a.pages.dev/rosso",
-      topics: []string{
-         "json",
-         "protobuf",
-         "xml",
-      },
-   },
-   {
-      name: "strconv",
-      homepage: "https://godocs.io/strconv.pages.dev",
-   },
-   {
-      description: "streaming",
-      homepage: "https://godocs.io/2a.pages.dev/stream",
-      name: "stream",
-      topics: []string{
-         "dash",
-         "hls",
-         "mp4",
-         "widevine",
-      },
-   },
-   {
-      description: "low-level access to the ClientHello for mimicry purposes",
-      homepage: "https://godocs.io/2a.pages.dev/tls",
-      name: "tls",
-      topics: []string{
-         "android",
-         "censorship-circumvention",
-         "crypto",
-      } ,    
-   },
-   {
-      name: "umber",
-      homepage: "https://2e.pages.dev/umber",
-   },
-}
 
 func Test_Topics(t *testing.T) {
    home, err := os.UserHomeDir()
@@ -159,3 +68,64 @@ func Test_User(t *testing.T) {
    }
 }
 
+var repos = []repository{
+   {
+      description: "Download APK from Google Play or send API requests",
+      name: "google-play",
+      topics: []string{"android"},
+      homepage: "https://godocs.io/154.pages.dev/google-play",
+   },
+   {
+      name: "mech",
+      description: "Download media or send API requests",
+      topics: []string{
+         "amc",
+         "bandcamp",
+         "cbc-gem",
+         "nbc",
+         "paramount",
+         "roku",
+         "soundcloud",
+         "twitter",
+         "widevine",
+         "youtube",
+      },
+      homepage: "https://godocs.io/154.pages.dev/media",
+   },
+   {
+      name: "encoding",
+      description: "Data parsers and formatters",
+      topics: []string{
+         "dash",
+         "hls",
+         "json",
+         "mp4",
+         "protobuf",
+         "xml",
+      },
+      homepage: "https://godocs.io/154.pages.dev/encoding",
+   },
+   {
+      name: "strconv",
+      homepage: "https://godocs.io/154.pages.dev/strconv",
+   },
+   {
+      name: "widevine",
+      description: "DRM",
+      homepage: "https://godocs.io/154.pages.dev/widevine",
+   },
+   {
+      description: "low-level access to the ClientHello for mimicry purposes",
+      name: "tls",
+      topics: []string{
+         "android",
+         "censorship-circumvention",
+         "crypto",
+      },    
+      homepage: "https://godocs.io/154.pages.dev/tls",
+   },
+   {
+      name: "umber",
+      homepage: "https://154.pages.dev/umber",
+   },
+}
