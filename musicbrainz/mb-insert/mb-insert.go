@@ -1,7 +1,7 @@
 package main
 
 import (
-   "2a.pages.dev/nursery/musicbrainz"
+   "154.pages.dev/api/musicbrainz"
    "database/sql"
    "flag"
    "os"
