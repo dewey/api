@@ -8,79 +8,6 @@ import (
    "time"
 )
 
-func user_info(name string) (map[string]string, error) {
-   b, err := os.ReadFile(name)
-   if err != nil {
-      return nil, err
-   }
-   var m map[string]string
-   if err := json.Unmarshal(b, &m); err != nil {
-      return nil, err
-   }
-   return m, nil
-}
-
-func Test_Topics(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   u, err := user_info(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   for _, repo := range repos {
-      if repo.topics != nil {
-         fmt.Println(repo.name)
-         err := repo.set_topics(u)
-         if err != nil {
-            t.Fatal(err)
-         }
-         time.Sleep(time.Second)
-      }
-   }
-}
-
-func Test_Description(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   u, err := user_info(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   for _, repo := range repos {
-      fmt.Println(repo.name)
-      err := repo.set_description(u)
-      if err != nil {
-         t.Fatal(err)
-      }
-      time.Sleep(time.Second)
-   }
-}
-
-func Test_User(t *testing.T) {
-   home, err := os.UserHomeDir()
-   if err != nil {
-      t.Fatal(err)
-   }
-   m, err := user_info(home + "/github.json")
-   if err != nil {
-      t.Fatal(err)
-   }
-   u := user{
-      bio: "email srpen6@gmail.com, Discord srpen6",
-      company: "looking for work",
-      location: "Dallas",
-      name: "Steven Penny",
-      website: "https://discord.com/invite/WWq6rFb8Rf",
-   }
-   if err := u.update(m); err != nil {
-      t.Fatal(err)
-   }
-}
-
 var repos = []repository{
    {
       name: "api",
@@ -123,7 +50,6 @@ var repos = []repository{
          "roku",
          "soundcloud",
          "twitter",
-         "widevine",
          "youtube",
       },
       homepage: "https://godocs.io/154.pages.dev/media",
@@ -152,3 +78,76 @@ var repos = []repository{
       homepage: "https://godocs.io/154.pages.dev/widevine",
    },
 }
+func Test_Description(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   u, err := user_info(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   for _, repo := range repos {
+      fmt.Println(repo.name)
+      err := repo.set_description(u)
+      if err != nil {
+         t.Fatal(err)
+      }
+      time.Sleep(time.Second)
+   }
+}
+
+func user_info(name string) (map[string]string, error) {
+   b, err := os.ReadFile(name)
+   if err != nil {
+      return nil, err
+   }
+   var m map[string]string
+   if err := json.Unmarshal(b, &m); err != nil {
+      return nil, err
+   }
+   return m, nil
+}
+
+func Test_Topics(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   u, err := user_info(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   for _, repo := range repos {
+      if repo.topics != nil {
+         fmt.Println(repo.name)
+         err := repo.set_topics(u)
+         if err != nil {
+            t.Fatal(err)
+         }
+         time.Sleep(time.Second)
+      }
+   }
+}
+
+func Test_User(t *testing.T) {
+   home, err := os.UserHomeDir()
+   if err != nil {
+      t.Fatal(err)
+   }
+   m, err := user_info(home + "/github.json")
+   if err != nil {
+      t.Fatal(err)
+   }
+   u := user{
+      bio: "email srpen6@gmail.com, Discord srpen6",
+      company: "looking for work",
+      location: "Dallas",
+      name: "Steven Penny",
+      website: "https://discord.com/invite/WWq6rFb8Rf",
+   }
+   if err := u.update(m); err != nil {
+      t.Fatal(err)
+   }
+}
+
