@@ -34,9 +34,9 @@ var repos = []repository{
    },
    {
       description: "Download APK from Google Play or send API requests",
-      name: "google-play",
+      name: "google",
       topics: []string{"android"},
-      homepage: "https://godocs.io/154.pages.dev/google-play",
+      homepage: "https://godocs.io/154.pages.dev/google",
    },
    {
       name: "media",
